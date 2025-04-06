@@ -1,22 +1,25 @@
 package com.elderlycare.medicalequipment;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
+import com.elderlycare.medicalequipment.config.WeatherConfig;
 
 @Service
 public class WeatherService {
 
-    @Value("${openweather.api.key}")
-    private String apiKey;
-
+    private final WeatherConfig weatherConfig;
+    private final RestTemplate restTemplate;
     private static final String WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-    public WeatherResponse getWeatherRisk(String city) {
-        RestTemplate restTemplate = new RestTemplate();
+    public WeatherService(WeatherConfig weatherConfig, RestTemplate restTemplate) {
+        this.weatherConfig = weatherConfig;
+        this.restTemplate = restTemplate;
+    }
 
-        String url = WEATHER_API_URL + "?q=" + city + "&appid=" + apiKey + "&units=metric";
+    public WeatherResponse getWeatherRisk(String city) {
+
+        String url = WEATHER_API_URL + "?q=" + city + "&appid=" + weatherConfig.getApiKey() + "&units=metric";
         String json = restTemplate.getForObject(url, String.class);
 
         JSONObject obj = new JSONObject(json);
