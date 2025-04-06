@@ -1,6 +1,5 @@
 package com.elderlycare.medicalequipment;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,8 +8,13 @@ import java.util.List;
 @RequestMapping("/api/equipment")
 public class EquipmentController {
 
-    @Autowired
-    private EquipmentService equipmentService;
+    private final EquipmentService equipmentService;
+    private final WeatherService weatherService;
+
+    public EquipmentController(EquipmentService equipmentService, WeatherService weatherService) {
+        this.equipmentService = equipmentService;
+        this.weatherService = weatherService;
+    }
 
     // MedicalEquipment endpoints
     @PostMapping("/add")
@@ -42,5 +46,11 @@ public class EquipmentController {
     @DeleteMapping("/maintenance/delete/{id}")
     public void deleteMaintenance(@PathVariable int id) {
         equipmentService.deleteMaintenance(id);
+    }
+
+    // Weather monitoring endpoint
+    @GetMapping("/weather-monitoring")
+    public WeatherResponse monitorWeather(@RequestParam String city) {
+        return weatherService.getWeatherRisk(city);
     }
 }
