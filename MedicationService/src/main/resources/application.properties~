@@ -1,0 +1,24 @@
+spring.application.name=api-gateway
+server.port=8093
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+eureka.instance.prefer-ip-address=true
+
+# Force WebFlux (reactive stack)
+spring.main.web-application-type=reactive
+
+# Dynamic routing with Eureka
+spring.cloud.gateway.discovery.locator.enabled=true
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+
+# Custom route for MEDICATION-SERVICE
+spring.cloud.gateway.routes[0].id=medication-service-route
+spring.cloud.gateway.routes[0].uri=lb://MEDICATION-SERVICE
+spring.cloud.gateway.routes[0].predicates[0]=Path=/medication-service/**
+spring.cloud.gateway.routes[0].filters[0]=StripPrefix=1
+
+# Enable logging for debugging
+logging.level.org.springframework.cloud.gateway=DEBUG
+logging.level.reactor.netty.http.client=DEBUG
+logging.level.org.springframework.web=DEBUG

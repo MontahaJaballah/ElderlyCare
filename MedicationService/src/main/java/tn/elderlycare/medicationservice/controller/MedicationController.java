@@ -1,0 +1,63 @@
+package tn.elderlycare.medicationservice.controller;
+
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tn.elderlycare.medicationservice.dto.MedicationDTO;
+import tn.elderlycare.medicationservice.entity.Medication;
+import tn.elderlycare.medicationservice.service.MedicationService;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/medications")
+public class MedicationController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MedicationController.class);
+
+    @Autowired
+    private MedicationService medicationService;
+
+    @PostMapping
+    public ResponseEntity<Medication> addMedication(@Valid @RequestBody Medication medication) {
+        return ResponseEntity.ok(medicationService.addMedication(medication));
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<MedicationDTO>> getMedicationsByPatientId(@PathVariable Long patientId) {
+        List<Medication> medications = medicationService.getMedicationsByPatientId(patientId);
+        List<MedicationDTO> medicationDTOs = medications.stream()
+                .map(med -> new MedicationDTO(
+                        med.getId(),
+                        med.getPatientId(),
+                        med.getName(),
+                        med.getDosage(),
+                        med.getFrequency(),
+                        med.getStartDate(),
+                        med.getEndDate()
+                ))
+                .collect(Collectors.toList());
+        logger.info("Medications retrieved: {}", medicationDTOs);
+        return ResponseEntity.ok(medicationDTOs);
+    }
+
+    @PutMapping("/{medicationId}")
+    public ResponseEntity<Medication> updateMedication(@PathVariable Long medicationId, @Valid @RequestBody Medication medication) {
+        return ResponseEntity.ok(medicationService.updateMedication(medicationId, medication));
+    }
+
+    @DeleteMapping("/{medicationId}")
+    public ResponseEntity<String> deleteMedication(@PathVariable Long medicationId) {
+        medicationService.deleteMedication(medicationId);
+        return ResponseEntity.ok("Medication deleted successfully");
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+        return ResponseEntity.ok("Test endpoint is working!");
+    }
+}
