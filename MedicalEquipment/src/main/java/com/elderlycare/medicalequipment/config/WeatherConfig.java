@@ -1,15 +1,18 @@
 package com.elderlycare.medicalequipment.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.core.env.Environment;
 
 @Configuration
 public class WeatherConfig {
     
-    @Value("${weather.api.key}")
-    private String apiKey;
+    private final Environment environment;
+    
+    public WeatherConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -17,6 +20,6 @@ public class WeatherConfig {
     }
 
     public String getApiKey() {
-        return apiKey;
+        return environment.getProperty("OPENWEATHER_API_KEY");
     }
 }
