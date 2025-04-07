@@ -3,6 +3,7 @@ package com.elderlycare.medicalequipment;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class MedicalEquipment implements Serializable {
     private String name;
     private String type;
     private boolean available;
-
+    private LocalDate manufactureDate;
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<EquipmentMaintenance> maintenanceRecords;
@@ -30,7 +31,7 @@ public class MedicalEquipment implements Serializable {
 
     // Getters & Setters
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+     public void setId(int id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -40,6 +41,9 @@ public class MedicalEquipment implements Serializable {
 
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
+
+    public LocalDate getManufactureDate() { return manufactureDate; }
+    public void setManufactureDate(LocalDate manufactureDate) { this.manufactureDate = manufactureDate; }
 
     public List<EquipmentMaintenance> getMaintenanceRecords() { return maintenanceRecords; }
     public void setMaintenanceRecords(List<EquipmentMaintenance> maintenanceRecords) {

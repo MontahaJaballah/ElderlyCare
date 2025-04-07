@@ -3,6 +3,7 @@ package com.elderlycare.medicalequipment;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/equipment")
@@ -52,5 +53,11 @@ public class EquipmentController {
     @GetMapping("/weather-monitoring")
     public WeatherResponse monitorWeather(@RequestParam String city) {
         return weatherService.getWeatherRisk(city);
+    }
+
+    // Equipment flagging endpoint
+    @GetMapping("/flag-old")
+    public List<Map<String, Object>> getFlaggedOldEquipment() {
+        return equipmentService.getFlaggedOldEquipment();
     }
 }
