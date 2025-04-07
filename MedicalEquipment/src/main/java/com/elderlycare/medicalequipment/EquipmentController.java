@@ -1,14 +1,17 @@
 package com.elderlycare.medicalequipment;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.core.io.InputStreamResource;
 
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.io.ByteArrayInputStream;
 
 import com.elderlycare.medicalequipment.dto.ChatRequestDTO;
 import com.elderlycare.medicalequipment.service.AIChatService;
+import com.elderlycare.medicalequipment.service.PDFService;
 
 @RestController
 @RequestMapping("/api/equipment")
@@ -17,11 +20,14 @@ public class EquipmentController {
     private final EquipmentService equipmentService;
     private final WeatherService weatherService;
     private final AIChatService aiChatService;
+    private final PDFService pdfService;
 
-    public EquipmentController(EquipmentService equipmentService, WeatherService weatherService, AIChatService aiChatService) {
+    public EquipmentController(EquipmentService equipmentService, WeatherService weatherService,
+                              AIChatService aiChatService, PDFService pdfService) {
         this.equipmentService = equipmentService;
         this.weatherService = weatherService;
         this.aiChatService = aiChatService;
+        this.pdfService = pdfService;
     }
 
     // MedicalEquipment endpoints
@@ -77,5 +83,23 @@ public class EquipmentController {
         Map<String, String> response = new HashMap<>();
         response.put("answer", answer);
         return ResponseEntity.ok(response);
+    }
+
+    // PDF Generation endpoint
+    @GetMapping("/generate-pdf/{id}")
+    public ResponseEntity<InputStreamResource> generatePDF(@PathVariable("id") int id) {
+        try {
+            ByteArrayInputStream bis = pdfService.generateEquipmentPDF(id);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=equipment_details.pdf");
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(bis));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }
