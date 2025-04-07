@@ -2,6 +2,10 @@ package com.elderlycare.medicalequipment.service;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import com.elderlycare.medicalequipment.EquipmentMaintenance;
 import com.elderlycare.medicalequipment.MedicalEquipment;
 import com.elderlycare.medicalequipment.MedicalEquipmentRepository;
 import com.elderlycare.medicalequipment.exception.ResourceNotFoundException;
@@ -30,41 +34,82 @@ public class PDFService {
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         PdfWriter.getInstance(document, out);
 
-        // Add metadata
-        document.addAuthor("ElderlyCare");
+        // Add metadata and document properties
+        document.addAuthor("ElderlyCare Medical System");
         document.addCreator("Medical Equipment Management System");
-        document.addTitle("Equipment Details - " + equipment.getName());
+        document.addTitle("Equipment Details Report - " + equipment.getName());
+        document.addKeywords("medical equipment, healthcare, maintenance, " + equipment.getType());
+        document.addSubject("Medical Equipment Details and Maintenance History");
 
         document.open();
 
-        // Title
-        Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-        Paragraph title = new Paragraph("Equipment Details", titleFont);
+        // Header with Logo (you can replace this with an actual logo)
+        Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD, new BaseColor(0, 102, 204));
+        Font subtitleFont = new Font(Font.FontFamily.HELVETICA, 14, Font.ITALIC, new BaseColor(128, 128, 128));
+        
+        Paragraph title = new Paragraph();
+        title.add(new Chunk("Equipment Details Report\n", titleFont));
+        title.add(new Chunk("Generated on: " + LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")), subtitleFont));
         title.setAlignment(Element.ALIGN_CENTER);
-        title.setSpacingAfter(20);
+        title.setSpacingAfter(30);
         document.add(title);
+        
+        // Add horizontal line
+        Paragraph line = new Paragraph();
+        line.add(new Chunk("_").setUnderline(0.1f, -2f));
+        line.setAlignment(Element.ALIGN_CENTER);
+        document.add(line);
+        document.add(new Paragraph("\n"));
 
-        // Equipment Information
-        Font normalFont = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
-        document.add(new Paragraph("Equipment Name: " + equipment.getName(), normalFont));
-        document.add(new Paragraph("Type: " + equipment.getType(), normalFont));
-        document.add(new Paragraph("Available: " + (equipment.isAvailable() ? "Yes" : "No"), normalFont));
+        // Equipment Information Section
+        Font sectionFont = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, new BaseColor(0, 102, 204));
+        Font labelFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, new BaseColor(64, 64, 64));
+        Font valueFont = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+        
+        Paragraph equipmentSection = new Paragraph("Equipment Information", sectionFont);
+        equipmentSection.setSpacingBefore(20);
+        equipmentSection.setSpacingAfter(10);
+        document.add(equipmentSection);
+        
+        // Create a table for equipment details
+        PdfPTable detailsTable = new PdfPTable(2);
+        detailsTable.setWidthPercentage(100);
+        detailsTable.setWidths(new float[]{1, 2});
+        detailsTable.setSpacingBefore(10);
+        detailsTable.setSpacingAfter(10);
+        
+        // Add equipment details in table format
+        addTableRow(detailsTable, "Equipment Name:", equipment.getName(), labelFont, valueFont);
+        addTableRow(detailsTable, "Type:", equipment.getType(), labelFont, valueFont);
+        addTableRow(detailsTable, "Status:", equipment.isAvailable() ? 
+            "Available ✓" : "Not Available ✗", labelFont, 
+            new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, 
+                equipment.isAvailable() ? new BaseColor(0, 150, 0) : new BaseColor(200, 0, 0)));
         
         if (equipment.getManufactureDate() != null) {
-            document.add(new Paragraph("Manufacture Date: " + 
-                equipment.getManufactureDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")), normalFont));
+            addTableRow(detailsTable, "Manufacture Date:", 
+                equipment.getManufactureDate().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")), 
+                labelFont, valueFont);
         }
         
-        document.add(new Paragraph("\n", normalFont));
+        document.add(detailsTable);
+        
+        document.add(new Paragraph("\n"));
 
-        // Maintenance Records
+        // Maintenance Records Section
         if (equipment.getMaintenanceRecords() != null && !equipment.getMaintenanceRecords().isEmpty()) {
-            Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-            Paragraph maintenanceTitle = new Paragraph("Maintenance Records", headerFont);
-            maintenanceTitle.setSpacingAfter(10);
-            document.add(maintenanceTitle);
+            Paragraph maintenanceSection = new Paragraph("Maintenance History", sectionFont);
+            maintenanceSection.setSpacingBefore(20);
+            maintenanceSection.setSpacingAfter(10);
+            document.add(maintenanceSection);
+            
+            // Add a note about maintenance
+            Font noteFont = new Font(Font.FontFamily.HELVETICA, 10, Font.ITALIC, new BaseColor(128, 128, 128));
+            Paragraph note = new Paragraph("Below is the complete maintenance history for this equipment.", noteFont);
+            note.setSpacingAfter(10);
+            document.add(note);
 
-            PdfPTable maintenanceTable = new PdfPTable(3); // 3 columns
+            PdfPTable maintenanceTable = new PdfPTable(3);
             maintenanceTable.setWidthPercentage(100);
             maintenanceTable.setSpacingBefore(10f);
             maintenanceTable.setSpacingAfter(10f);
@@ -73,15 +118,35 @@ public class PDFService {
             float[] columnWidths = {1f, 3f, 2f};
             maintenanceTable.setWidths(columnWidths);
 
+            // Style the table
+            maintenanceTable.setHeaderRows(1);
+            maintenanceTable.setKeepTogether(true);
+            maintenanceTable.getDefaultCell().setPadding(8);
+            maintenanceTable.getDefaultCell().setBorderColor(new BaseColor(200, 200, 200));
+
             // Add table headers
             addMaintenanceTableHeader(maintenanceTable);
 
-            // Add maintenance records
-            equipment.getMaintenanceRecords().forEach(record -> {
-                maintenanceTable.addCell(String.valueOf(record.getId())); // Record ID
-                maintenanceTable.addCell(record.getDescription()); // Description
-                maintenanceTable.addCell(record.getMaintenanceDate().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))); // Date
-            });
+            // Add maintenance records with alternating colors
+            boolean alternate = false;
+            for (EquipmentMaintenance record : equipment.getMaintenanceRecords()) {
+                BaseColor rowColor = alternate ? new BaseColor(240, 240, 250) : BaseColor.WHITE;
+                
+                PdfPCell idCell = new PdfPCell(new Phrase(String.valueOf(record.getId()), valueFont));
+                PdfPCell descCell = new PdfPCell(new Phrase(record.getDescription(), valueFont));
+                PdfPCell dateCell = new PdfPCell(new Phrase(
+                    record.getMaintenanceDate().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")), valueFont));
+                
+                styleCell(idCell, rowColor);
+                styleCell(descCell, rowColor);
+                styleCell(dateCell, rowColor);
+                
+                maintenanceTable.addCell(idCell);
+                maintenanceTable.addCell(descCell);
+                maintenanceTable.addCell(dateCell);
+                
+                alternate = !alternate;
+            }
 
             document.add(maintenanceTable);
         }
@@ -98,18 +163,37 @@ public class PDFService {
 
     private void addMaintenanceTableHeader(PdfPTable table) {
         Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE);
+        BaseColor headerColor = new BaseColor(0, 102, 204);
 
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(BaseColor.DARK_GRAY);
-        cell.setPadding(5);
+        String[] headers = {"Record ID", "Description", "Date"};
+        for (String header : headers) {
+            PdfPCell cell = new PdfPCell(new Phrase(header, headerFont));
+            cell.setBackgroundColor(headerColor);
+            cell.setPadding(10);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(cell);
+        }
+    }
 
-        cell.setPhrase(new Phrase("Record ID", headerFont));
-        table.addCell(cell);
+    private void addTableRow(PdfPTable table, String label, String value, Font labelFont, Font valueFont) {
+        PdfPCell labelCell = new PdfPCell(new Phrase(label, labelFont));
+        PdfPCell valueCell = new PdfPCell(new Phrase(value, valueFont));
+        
+        labelCell.setPadding(8);
+        valueCell.setPadding(8);
+        
+        labelCell.setBorderColor(new BaseColor(200, 200, 200));
+        valueCell.setBorderColor(new BaseColor(200, 200, 200));
+        
+        table.addCell(labelCell);
+        table.addCell(valueCell);
+    }
 
-        cell.setPhrase(new Phrase("Description", headerFont));
-        table.addCell(cell);
-
-        cell.setPhrase(new Phrase("Date", headerFont));
-        table.addCell(cell);
+    private void styleCell(PdfPCell cell, BaseColor backgroundColor) {
+        cell.setBackgroundColor(backgroundColor);
+        cell.setPadding(8);
+        cell.setBorderColor(new BaseColor(200, 200, 200));
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
     }
 }
