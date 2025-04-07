@@ -32,6 +32,7 @@ logging.level.org.springframework.boot=DEBUG
 logging.level.org.springframework=DEBUG
 logging.level.org.hibernate=DEBUG
 logging.level.tn.elderlycare.medicationservice=DEBUG
+logging.file.name=logs/medication-service.log
 
 # Email configuration (using Gmail SMTP)
 spring.mail.host=smtp.gmail.com
@@ -42,4 +43,4 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 
 # Receiver email
-app.email.receiver=receiver-email@example.com
+app.email.receiver=montaha.benjaballah@esprit.tn

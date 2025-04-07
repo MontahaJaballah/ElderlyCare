@@ -1,17 +1,18 @@
 package tn.elderlycare.medicationservice.controller;
 
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.elderlycare.medicationservice.dto.MedicationDTO;
 import tn.elderlycare.medicationservice.entity.Medication;
+import tn.elderlycare.medicationservice.service.DrugInfoService;
 import tn.elderlycare.medicationservice.service.MedicationService;
+import tn.elderlycare.medicationservice.service.QrCodeService;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/medications")
@@ -22,42 +23,91 @@ public class MedicationController {
     @Autowired
     private MedicationService medicationService;
 
+    @Autowired
+    private DrugInfoService drugInfoService;
+
+    @Autowired
+    private QrCodeService qrCodeService;
+
     @PostMapping
-    public ResponseEntity<Medication> addMedication(@Valid @RequestBody Medication medication) {
-        return ResponseEntity.ok(medicationService.addMedication(medication));
+    public ResponseEntity<Medication> addMedication(@RequestBody Medication medication) {
+        Medication savedMedication = medicationService.addMedication(medication);
+        return ResponseEntity.ok(savedMedication);
     }
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<MedicationDTO>> getMedicationsByPatientId(@PathVariable Long patientId) {
+    public ResponseEntity<List<Medication>> getMedicationsByPatientId(@PathVariable Long patientId) {
         List<Medication> medications = medicationService.getMedicationsByPatientId(patientId);
-        List<MedicationDTO> medicationDTOs = medications.stream()
-                .map(med -> new MedicationDTO(
-                        med.getId(),
-                        med.getPatientId(),
-                        med.getName(),
-                        med.getDosage(),
-                        med.getFrequency(),
-                        med.getStartDate(),
-                        med.getEndDate()
-                ))
-                .collect(Collectors.toList());
-        logger.info("Medications retrieved: {}", medicationDTOs);
-        return ResponseEntity.ok(medicationDTOs);
+        return ResponseEntity.ok(medications);
     }
 
-    @PutMapping("/{medicationId}")
-    public ResponseEntity<Medication> updateMedication(@PathVariable Long medicationId, @Valid @RequestBody Medication medication) {
-        return ResponseEntity.ok(medicationService.updateMedication(medicationId, medication));
+    @PutMapping("/{id}")
+    public ResponseEntity<Medication> updateMedication(@PathVariable Long id, @RequestBody Medication medication) {
+        Medication updatedMedication = medicationService.updateMedication(id, medication);
+        return ResponseEntity.ok(updatedMedication);
     }
 
-    @DeleteMapping("/{medicationId}")
-    public ResponseEntity<String> deleteMedication(@PathVariable Long medicationId) {
-        medicationService.deleteMedication(medicationId);
-        return ResponseEntity.ok("Medication deleted successfully");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMedication(@PathVariable Long id) {
+        medicationService.deleteMedication(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> testEndpoint() {
-        return ResponseEntity.ok("Test endpoint is working!");
+    @GetMapping(value = "/qr/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> generateQrCode(@PathVariable Long id) {
+        logger.debug("Generating QR code for medication ID: {}", id);
+
+        Optional<Medication> medicationOptional = medicationService.getMedicationById(id);
+        if (medicationOptional.isEmpty()) {
+            logger.warn("Medication not found for ID: {}", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        Medication medication = medicationOptional.get();
+        // Fetch additional drug info from OpenFDA API
+        logger.debug("Fetching drug info for medication: {}", medication.getName());
+        String drugInfo = drugInfoService.fetchDrugInfo(medication.getName());
+
+        // Truncate drugInfo to avoid exceeding QR code capacity
+        String truncatedDrugInfo = drugInfo != null && drugInfo.length() > 500
+                ? drugInfo.substring(0, 500) + "..."
+                : drugInfo;
+
+        // Create the QR code content with medication details
+        String qrContent = String.format(
+                "Medication ID: %d\n" +
+                        "Name: %s\n" +
+                        "Dosage: %s\n" +
+                        "Frequency: %s\n" +
+                        "Start Date: %s\n" +
+                        "Patient ID: %d\n" +
+                        "OpenFDA Info: %s",
+                medication.getId(),
+                medication.getName(),
+                medication.getDosage(),
+                medication.getFrequency(),
+                medication.getStartDate().toString(),
+                medication.getPatientId(),
+                truncatedDrugInfo != null ? truncatedDrugInfo : "Not available"
+        );
+
+        // Log the length of qrContent to verify it's within a safe range
+        logger.debug("QR code content length: {}", qrContent.length());
+        if (qrContent.length() > 4000) {
+            logger.warn("QR code content is too long ({} characters). Truncating further.", qrContent.length());
+            qrContent = qrContent.substring(0, 4000);
+        }
+
+        try {
+            logger.debug("Generating QR code with content: {}", qrContent);
+            byte[] qrCodeImage = qrCodeService.generateQrCode(qrContent, 250, 250);
+            logger.debug("QR code generated successfully for medication ID: {}", id);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(qrCodeImage);
+        } catch (Exception e) {
+            logger.error("Failed to generate QR code for medication ID: {}. Error: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

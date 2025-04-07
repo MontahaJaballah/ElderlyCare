@@ -15,6 +15,7 @@ import tn.elderlycare.medicationservice.util.FrequencyParser;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MedicationService {
@@ -31,7 +32,7 @@ public class MedicationService {
     private DrugInfoService drugInfoService;
 
     @Autowired
-    private EmailService emailService; // Inject EmailService
+    private EmailService emailService;
 
     public MedicationService(MedicationRepository medicationRepository,
                              ReminderService reminderService,
@@ -80,6 +81,11 @@ public class MedicationService {
             throw new MedicationServiceException("No medications found for patient ID: " + patientId);
         }
         return medications;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Medication> getMedicationById(Long id) {
+        return medicationRepository.findById(id);
     }
 
     public Medication updateMedication(Long id, Medication updatedMedication) {
