@@ -175,3 +175,30 @@ Log levels (console):<br>
 - tn.elderlycare.medicationservice: DEBUG<br><br>
 
 To increase verbosity, adjust log levels in `application.properties`.<br>
+## Email Notification Feature
+
+The `MEDICATION-SERVICE` includes an email notification feature that sends reminders to patients when they miss a medication dose. This feature uses Spring Boot's `spring-boot-starter-mail` and `org.eclipse.angus:jakarta.mail` to send emails via an SMTP server (e.g., Gmail).
+
+### Features
+- **Overdue Reminder Detection**: The service checks for overdue reminders every minute using a scheduled task (`@Scheduled`).
+- **Email Notifications**: Sends an HTML-formatted email to the patient when a reminder is overdue, including details like the medication name, dosage, scheduled time, and patient ID.
+- **Dynamic Configuration**: Email settings are configured via a `.env` file using the `spring-dotenv` library, ensuring sensitive information (e.g., SMTP credentials) is not hardcoded.
+
+### Setup
+
+1. **Dependencies**:
+   The following dependencies are required in `pom.xml`:
+   ```xml
+   <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-mail</artifactId>
+   </dependency>
+   <dependency>
+       <groupId>org.eclipse.angus</groupId>
+       <artifactId>jakarta.mail</artifactId>
+   </dependency>
+   <dependency>
+       <groupId>me.paulschwarz</groupId>
+       <artifactId>spring-dotenv</artifactId>
+       <version>4.0.0</version>
+   </dependency>
