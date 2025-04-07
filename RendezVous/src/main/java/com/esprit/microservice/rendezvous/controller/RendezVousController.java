@@ -2,6 +2,7 @@ package com.esprit.microservice.rendezvous.controller;
 
 import com.esprit.microservice.rendezvous.entities.RendezVous;
 import com.esprit.microservice.rendezvous.services.RendezVousService;
+import com.esprit.microservice.rendezvous.services.SmsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class RendezVousController {
         return rendezVousService.getRendezVousParPersonneAgee(id);
     }
 
+    @GetMapping("/parProfessionnel/{id}")
+    public List<RendezVous> getRendezVousParProfessionnel(@PathVariable Long id) {
+        return rendezVousService.getRendezVousParProfessionnel(id);
+    }
+
     // ✅ Reschedule appointment
     @PutMapping("/reprogrammer/{id}")
     public RendezVous reprogrammerRendezVous(@PathVariable Long id, @RequestParam LocalDateTime nouvelleDateHeure) {
@@ -40,5 +46,14 @@ public class RendezVousController {
     @DeleteMapping("/annuler/{id}")
     public void annulerRendezVous(@PathVariable Long id) {
         rendezVousService.annulerRendezVous(id);
+    }
+
+    private final SmsService smsService;
+
+
+    @GetMapping("/send")
+    public String testSms(@RequestParam String to, @RequestParam String message) {
+        smsService.sendSms(to, message);
+        return "SMS sent (Check logs)";
     }
 }
