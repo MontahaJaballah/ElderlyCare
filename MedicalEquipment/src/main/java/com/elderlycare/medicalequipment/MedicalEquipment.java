@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import jakarta.persistence.PostLoad;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -15,6 +16,9 @@ public class MedicalEquipment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(unique = true)
+    private String equipmentCode;
 
     private String name;
     private String type;
@@ -34,7 +38,20 @@ public class MedicalEquipment implements Serializable {
 
     // Getters & Setters
     public int getId() { return id; }
-     public void setId(int id) { this.id = id; }
+    public void setId(int id) { 
+        this.id = id;
+        setEquipmentCode("EQ-" + id);
+    }
+
+    @PostLoad
+    private void onLoad() {
+        if (this.equipmentCode == null || !this.equipmentCode.equals("EQ-" + this.id)) {
+            this.equipmentCode = "EQ-" + this.id;
+        }
+    }
+
+    public String getEquipmentCode() { return equipmentCode; }
+    public void setEquipmentCode(String equipmentCode) { this.equipmentCode = equipmentCode; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
