@@ -39,16 +39,13 @@ medication-service/<br> ├── src/<br> │   ├── main/<br> │   �
 
 ## Setup Instructions<br>
 
-### 1. Clone the Repository<br>
-```bash<br>
-git clone https://github.com/&lt;your-username&gt;/medication-service.git<br>
-cd medication-service<br>
-```<br><br>
-
+### 1. Clone the Repository
+<br>git clone https://github.com/<your-username>/medication-service.git<br>
+<br>cd medication-service<br>
 ### 2. Configure the Application<br>
 Edit `src/main/resources/application.properties` if needed. Default settings:<br>
 
-```properties<br>
+properties<br>
 spring.application.name=medication-service<br>
 server.port=8082<br>
 
@@ -72,17 +69,17 @@ eureka.instance.prefer-ip-address=true<br>
 logging.level.org.springframework=INFO<br>
 logging.level.org.hibernate=INFO<br>
 logging.level.tn.elderlycare.medicationservice=DEBUG<br>
-```<br><br>
+<br><br>
 
 ### 3. Build the Project<br>
-```bash<br>
+<br>
 mvn clean install<br>
-```<br><br>
+<br>
 
 ### 4. Run the Application<br>
-```bash<br>
+<br>
 mvn spring-boot:run<br>
-```<br>
+<br>
 The service will start on port `8082` and register with Eureka Server at `http://localhost:8761`.<br><br>
 
 ### 5. Access the H2 Console (Optional)<br>
@@ -100,7 +97,7 @@ http://localhost:8082<br>
 | Method | Endpoint | Description | Example Request Body | Example Response |<br>
 |--------|----------|-------------|----------------------|------------------|<br>
 | POST | /medications | Add a medication |<br>
-```json<br>
+json<br>
 {<br>
   "patientId": 1,<br>
   "name": "Ibuprofen",<br>
@@ -108,7 +105,7 @@ http://localhost:8082<br>
   "frequency": "every 6 hours",<br>
   "startDate": "2025-04-04"<br>
 }<br>
-``` | Response includes medication with generated reminders.<br>
+| Response includes medication with generated reminders.<br>
 
 | GET | /medications/patient/{patientId} | Retrieve medications for a patient | N/A | List of medications |<br>
 | PUT | /medications/{medicationId} | Update a medication | JSON with updated fields | Updated medication object |<br>
@@ -119,30 +116,30 @@ http://localhost:8082<br>
 | Method | Endpoint | Description | Example Request Body | Example Response |<br>
 |--------|----------|-------------|----------------------|------------------|<br>
 | POST | /reminders/medication/{medicationId} | Add a reminder |<br>
-```json<br>
+json<br>
 { "reminderTime": "2025-04-04T08:00:00" }<br>
-``` | Reminder object |<br>
+| Reminder object |<br>
 | GET | /reminders/patient/{patientId} | Get reminders for patient | N/A | List of reminders |<br>
 | GET | /reminders/all | Get all reminders | N/A | List of reminders |<br><br>
 
 ## Example Usage<br>
 
 ### Add a Medication<br>
-```bash<br>
+bash<br>
 curl -X POST http://localhost:8082/medications \<br>
 -H "Content-Type: application/json" \<br>
 -d '{"patientId": 1, "name": "Ibuprofen", "dosage": "200mg", "frequency": "every 6 hours", "startDate": "2025-04-04"}'<br>
-```<br>
+<br>
 
 ### Retrieve Medications<br>
-```bash<br>
+bash<br>
 curl http://localhost:8082/medications/patient/1<br>
-```<br>
+<br>
 
 ### Retrieve Reminders<br>
-```bash<br>
+bash<br>
 curl http://localhost:8082/reminders/patient/1<br>
-```<br><br>
+<br><br>
 
 ## Value-Added Features<br>
 
@@ -178,4 +175,3 @@ Log levels (console):<br>
 - tn.elderlycare.medicationservice: DEBUG<br><br>
 
 To increase verbosity, adjust log levels in `application.properties`.<br>
-
