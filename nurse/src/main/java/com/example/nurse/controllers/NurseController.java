@@ -1,0 +1,55 @@
+package com.example.nurse.controllers;
+
+
+import com.example.nurse.entities.Nurse;
+import com.example.nurse.services.INurse;
+import com.example.nurse.services.NurseService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/nurse")
+public class NurseController {
+
+
+    @Autowired
+    private NurseService nurseService;
+
+    @GetMapping("/{id}")
+    public Optional<Nurse> getNurse(@PathVariable int id) {
+        return nurseService.getNurse(id);
+    }
+
+
+    @PostMapping("/addNurse")
+    public void addNurse(@RequestBody Nurse nurse) {
+        nurseService.addNurse(nurse);
+    }
+
+    @GetMapping("/etAllNurses")
+    public List<Nurse> getAllNurses() {
+        return nurseService.getAllNurses();
+    }
+
+    @DeleteMapping("/removeNurse")
+    public void removeNurse(@RequestBody Nurse nurse) {
+        nurseService.removeNurse(nurse);
+    }
+
+    @GetMapping("/searchByName")
+    public List<Nurse> getNursesByName(@RequestParam String name) {
+        return nurseService.getNursesByName(name);
+    }
+
+    @GetMapping("/searchByExperience")
+    public List<Nurse> getNursesByExperience(@RequestParam int minYears) {
+        return nurseService.getNursesByExperience(minYears);
+    }
+
+
+}
