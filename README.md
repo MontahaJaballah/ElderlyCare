@@ -86,6 +86,17 @@ GET /api/equipment/by-code/{code}
 - Format: EQ-{id} (e.g., EQ-3)
 - Auto-generated for new equipment
 
+##### 6. Stats
+```
+GET 
+http://localhost:8090/equipment/api/stats/equipment/type-distribution
+```
+- Returns statistics on equipment usage and maintenance
+- Includes:
+  - Total equipment count
+  - Average equipment age
+  - Maintenance frequency
+
 ## 🛠 Technical Details
 
 ### Dependencies
@@ -108,6 +119,13 @@ GET /api/equipment/by-code/{code}
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    
+    <!-- Stats Charts -->
+    <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart</artifactId>
+        <version>1.5.3</version>
     </dependency>
 </dependencies>
 ```
