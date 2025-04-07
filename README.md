@@ -94,33 +94,33 @@ The service will start on port `8082` and register with Eureka Server at `http:/
 http://localhost:8082<br>
 
 ### Medication Endpoints<br>
-| Method | Endpoint | Description | Example Request Body | Example Response |<br>
-|--------|----------|-------------|----------------------|------------------|<br>
-| POST | /medications | Add a medication |<br>
-json<br>
-{<br>
-  "patientId": 1,<br>
-  "name": "Ibuprofen",<br>
-  "dosage": "200mg",<br>
-  "frequency": "every 6 hours",<br>
-  "startDate": "2025-04-04"<br>
-}<br>
-| Response includes medication with generated reminders.<br>
+| Method | Endpoint | Description | Example Request Body | Example Response |
+|--------|----------|-------------|----------------------|------------------|
+| POST | /medications | Add a medication |
+json
+{
+  "patientId": 1,
+  "name": "Ibuprofen",
+  "dosage": "200mg",
+  "frequency": "every 6 hours",
+  "startDate": "2025-04-04"
+}
+| Response includes medication with generated reminders.
 
-| GET | /medications/patient/{patientId} | Retrieve medications for a patient | N/A | List of medications |<br>
-| PUT | /medications/{medicationId} | Update a medication | JSON with updated fields | Updated medication object |<br>
-| DELETE | /medications/{medicationId} | Delete a medication | N/A | `"Medication deleted successfully"` |<br>
-| GET | /medications/test | Test endpoint | N/A | `"Test endpoint is working!"` |<br><br>
+| GET | /medications/patient/{patientId} | Retrieve medications for a patient | N/A | List of medications |
+| PUT | /medications/{medicationId} | Update a medication | JSON with updated fields | Updated medication object |
+| DELETE | /medications/{medicationId} | Delete a medication | N/A | `"Medication deleted successfully"` |
+| GET | /medications/test | Test endpoint | N/A | `"Test endpoint is working!"` |
 
-### Reminder Endpoints<br>
-| Method | Endpoint | Description | Example Request Body | Example Response |<br>
-|--------|----------|-------------|----------------------|------------------|<br>
-| POST | /reminders/medication/{medicationId} | Add a reminder |<br>
-json<br>
-{ "reminderTime": "2025-04-04T08:00:00" }<br>
-| Reminder object |<br>
-| GET | /reminders/patient/{patientId} | Get reminders for patient | N/A | List of reminders |<br>
-| GET | /reminders/all | Get all reminders | N/A | List of reminders |<br><br>
+### Reminder Endpoints
+| Method | Endpoint | Description | Example Request Body | Example Response |
+|--------|----------|-------------|----------------------|------------------|
+| POST | /reminders/medication/{medicationId} | Add a reminder |
+json
+{ "reminderTime": "2025-04-04T08:00:00" }
+| Reminder object |
+| GET | /reminders/patient/{patientId} | Get reminders for patient | N/A | List of reminders |
+| GET | /reminders/all | Get all reminders | N/A | List of reminders |
 
 ## Example Usage<br>
 
