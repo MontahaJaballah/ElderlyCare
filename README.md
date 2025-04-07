@@ -126,11 +126,10 @@ GET /api/equipment/by-code/{code}
 
 1. Clone the repository
 2. Configure environment variables in `.env`
-3. Run the application:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-4. Access the API at `http://localhost:8090/equipment`
+3. Import the project into IntelliJ IDEA
+4. Run the application as a Spring Boot application
+5. Access the API at `http://localhost:8090/equipment`
+6. For microservices architecture, ensure each module is running separately and configured to communicate with each other.
 
 ## 📝 Notes
 - Equipment codes are automatically generated as EQ-{id}
