@@ -1,0 +1,28 @@
+package tn.elderlycare.medicationservice.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tn.elderlycare.medicationservice.entity.Reminder;
+import tn.elderlycare.medicationservice.service.ReminderService;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/reminders")
+public class ReminderController {
+
+    @Autowired
+    private ReminderService reminderService;
+
+    @PostMapping("/medication/{medicationId}")
+    public ResponseEntity<Reminder> setReminder(@PathVariable Long medicationId, @RequestBody LocalDateTime reminderTime) {
+        return ResponseEntity.ok(reminderService.setReminder(medicationId, reminderTime));
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<Reminder>> getRemindersByPatientId(@PathVariable Long patientId) {
+        return ResponseEntity.ok(reminderService.getRemindersByPatientId(patientId));
+    }
+}
