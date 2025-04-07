@@ -1,0 +1,113 @@
+package com.esprit.microservice.rendezvous.services;
+
+import com.esprit.microservice.rendezvous.entities.*;
+import com.esprit.microservice.rendezvous.repositories.DisponibiliteRepository;
+import com.esprit.microservice.rendezvous.repositories.PersonneAgeeRepository;
+import com.esprit.microservice.rendezvous.repositories.ProfessionnelSanteRepository;
+import com.esprit.microservice.rendezvous.repositories.RendezVousRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class RendezVousService {
+    private final RendezVousRepository rendezVousRepository;
+    private final PersonneAgeeRepository personneAgeeRepository;
+    private final ProfessionnelSanteRepository professionnelSanteRepository;
+    private final DisponibiliteRepository disponibiliteRepository;
+
+    // ✅ Book an appointment only if the professional is available
+    public RendezVous ajouterRendezVous(Long idPersonneAgee, Long idProfessionnel, LocalDateTime dateHeure) {
+        // Retrieve the elderly person
+        PersonneAgee personneAgee = personneAgeeRepository.findById(idPersonneAgee)
+                .orElseThrow(() -> new IllegalArgumentException("Personne âgée introuvable avec l'ID: " + idPersonneAgee));
+
+        // Retrieve the healthcare professional
+        ProfessionnelSante professionnelSante = professionnelSanteRepository.findById(idProfessionnel)
+                .orElseThrow(() -> new IllegalArgumentException("Professionnel de santé introuvable avec l'ID: " + idProfessionnel));
+
+        // Check if the appointment date is in the future
+        if (dateHeure.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("La date et l'heure du rendez-vous doivent être dans le futur.");
+        }
+
+        // Convert DayOfWeek to JourSemaine
+        JourSemaine jourSemaine = JourSemaine.valueOf(dateHeure.getDayOfWeek().name());
+
+        // Check if the professional is available at the given time
+        boolean isAvailable = disponibiliteRepository.existsByProfessionnelSanteAndJourSemaineAndHeureDebutLessThanEqualAndHeureFinGreaterThanEqual(
+                professionnelSante, jourSemaine, dateHeure.toLocalTime(), dateHeure.toLocalTime()
+        );
+
+        // If not available, throw an exception
+        if (!isAvailable) {
+            throw new IllegalArgumentException("Le professionnel n'est pas disponible à cette heure.");
+        }
+
+        // Save the appointment
+        RendezVous rendezVous = new RendezVous();
+        rendezVous.setPersonneAgee(personneAgee);
+        rendezVous.setProfessionnelSante(professionnelSante);
+        rendezVous.setDateHeure(dateHeure);
+        rendezVous.setStatut(StatutRendezVous.PENDING);  // Set the status to pending
+
+        return rendezVousRepository.save(rendezVous);
+    }
+
+    public List<RendezVous> getRendezVousParPersonneAgee(Long id) {
+        PersonneAgee personneAgee = personneAgeeRepository.findById(id).orElse(null);
+        return (personneAgee != null) ? rendezVousRepository.findByPersonneAgee(personneAgee) : List.of();
+    }
+
+    public List<RendezVous> getRendezVousParProfessionnel(Long id) {
+        ProfessionnelSante professionnelSante = professionnelSanteRepository.findById(id).orElse(null);
+        return (professionnelSante != null) ? rendezVousRepository.findByProfessionnelSante(professionnelSante) : List.of();
+    }
+
+    // Reschedule appointment
+    public RendezVous reprogrammerRendezVous(Long idRendezVous, LocalDateTime nouvelleDateHeure) {
+        // Retrieve the existing appointment
+        RendezVous rendezVous = rendezVousRepository.findById(idRendezVous)
+                .orElseThrow(() -> new IllegalArgumentException("Rendez-vous introuvable avec l'ID: " + idRendezVous));
+
+        // Check if the new appointment date is in the future
+        if (nouvelleDateHeure.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("La nouvelle date et l'heure du rendez-vous doivent être dans le futur.");
+        }
+
+        // Retrieve the professional associated with the appointment
+        ProfessionnelSante professionnel = rendezVous.getProfessionnelSante();
+
+        // Convert DayOfWeek to JourSemaine
+        JourSemaine jourSemaine = JourSemaine.valueOf(nouvelleDateHeure.getDayOfWeek().name());
+
+        // Check if the professional is available at the new time
+        boolean isAvailable = disponibiliteRepository.existsByProfessionnelSanteAndJourSemaineAndHeureDebutLessThanEqualAndHeureFinGreaterThanEqual(
+                professionnel, jourSemaine, nouvelleDateHeure.toLocalTime(), nouvelleDateHeure.toLocalTime()
+        );
+
+        if (!isAvailable) {
+            throw new IllegalArgumentException("Le professionnel n'est pas disponible à cette heure.");
+        }
+
+        // Update the appointment with the new date and time
+        rendezVous.setDateHeure(nouvelleDateHeure);
+        rendezVous.setStatut(StatutRendezVous.PENDING);  // Set the status to pending
+
+        // Save the updated appointment
+        return rendezVousRepository.save(rendezVous);
+    }
+
+    // Cancel appointment
+    public void annulerRendezVous(Long id) {
+        if (!rendezVousRepository.existsById(id)) {
+            throw new IllegalArgumentException("Rendez-vous introuvable.");
+        }
+        rendezVousRepository.deleteById(id);
+    }
+}
+
