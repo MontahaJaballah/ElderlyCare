@@ -5,4 +5,7 @@ import java.util.Optional;
 
 public interface MedicalEquipmentRepository extends JpaRepository<MedicalEquipment, Integer> {
     Optional<MedicalEquipment> findByEquipmentCode(String equipmentCode);
+    
+    // Count equipment by availability status
+    long countByAvailable(boolean available);
 }
