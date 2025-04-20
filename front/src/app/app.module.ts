@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EquipmentListComponent } from './components/equipment-list/equipment-list.component';
 import { EquipmentManagementComponent } from './components/equipment-management/equipment-management.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EquipmentListComponent,
-    EquipmentManagementComponent
+    EquipmentManagementComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

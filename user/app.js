@@ -1,8 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const { connectDB, PORT } = require('./config/db');
 const { registerWithEureka, sendHeartbeat } = require('./config/eureka');
 
 const app = express();
+
+// Enable CORS for development
+app.use(cors());
+
 app.use(express.json());
 
 // Connect to MongoDB
