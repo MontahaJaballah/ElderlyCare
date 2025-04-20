@@ -1,6 +1,7 @@
 package tn.elderlycare.medicationservice.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MedicationDTO {
     private Long id;
@@ -10,11 +11,14 @@ public class MedicationDTO {
     private String frequency;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDateTime reminderTime;
+    private boolean taken;
 
     public MedicationDTO() {
     }
 
-    public MedicationDTO(Long id, Long patientId, String name, String dosage, String frequency, LocalDate startDate, LocalDate endDate) {
+    public MedicationDTO(Long id, Long patientId, String name, String dosage, String frequency,
+                         LocalDate startDate, LocalDate endDate, LocalDateTime reminderTime, boolean taken) {
         this.id = id;
         this.patientId = patientId;
         this.name = name;
@@ -22,6 +26,8 @@ public class MedicationDTO {
         this.frequency = frequency;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.reminderTime = reminderTime;
+        this.taken = taken;
     }
 
     public Long getId() {
@@ -78,5 +84,21 @@ public class MedicationDTO {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public LocalDateTime getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(LocalDateTime reminderTime) {
+        this.reminderTime = reminderTime;
+    }
+
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
     }
 }

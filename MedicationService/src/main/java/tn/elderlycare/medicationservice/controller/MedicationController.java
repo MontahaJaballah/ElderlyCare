@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.elderlycare.medicationservice.dto.MedicationDTO;
 import tn.elderlycare.medicationservice.entity.Medication;
 import tn.elderlycare.medicationservice.service.DrugInfoService;
 import tn.elderlycare.medicationservice.service.MedicationService;
 import tn.elderlycare.medicationservice.service.QrCodeService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +32,9 @@ public class MedicationController {
     private QrCodeService qrCodeService;
 
     @PostMapping
-    public ResponseEntity<Medication> addMedication(@RequestBody Medication medication) {
-        Medication savedMedication = medicationService.addMedication(medication);
-        return ResponseEntity.ok(savedMedication);
+    public ResponseEntity<Medication> addMedication(@RequestBody MedicationDTO medicationDTO) {
+        Medication medication = medicationService.addMedication(medicationDTO);
+        return ResponseEntity.ok(medication);
     }
 
     @GetMapping("/patient/{patientId}")
@@ -42,8 +44,8 @@ public class MedicationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Medication> updateMedication(@PathVariable Long id, @RequestBody Medication medication) {
-        Medication updatedMedication = medicationService.updateMedication(id, medication);
+    public ResponseEntity<Medication> updateMedication(@PathVariable Long id, @RequestBody MedicationDTO medicationDTO) {
+        Medication updatedMedication = medicationService.updateMedication(id, medicationDTO);
         return ResponseEntity.ok(updatedMedication);
     }
 
@@ -51,6 +53,24 @@ public class MedicationController {
     public ResponseEntity<Void> deleteMedication(@PathVariable Long id) {
         medicationService.deleteMedication(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/reminder/{medicationId}")
+    public ResponseEntity<Medication> setReminder(@PathVariable Long medicationId, @RequestBody MedicationDTO reminderRequest) {
+        Medication medication = medicationService.setReminder(medicationId, reminderRequest.getReminderTime());
+        return ResponseEntity.ok(medication);
+    }
+
+    @GetMapping("/reminders/patient/{patientId}")
+    public ResponseEntity<List<Medication>> getRemindersByPatientId(@PathVariable Long patientId) {
+        List<Medication> medications = medicationService.getMedicationsByPatientId(patientId);
+        return ResponseEntity.ok(medications);
+    }
+
+    @GetMapping("/reminders/all")
+    public ResponseEntity<List<Medication>> getAllReminders() {
+        List<Medication> medications = medicationService.getAllMedications();
+        return ResponseEntity.ok(medications);
     }
 
     @GetMapping(value = "/qr/{id}", produces = MediaType.IMAGE_PNG_VALUE)
@@ -64,16 +84,13 @@ public class MedicationController {
         }
 
         Medication medication = medicationOptional.get();
-        // Fetch additional drug info from OpenFDA API
         logger.debug("Fetching drug info for medication: {}", medication.getName());
         String drugInfo = drugInfoService.fetchDrugInfo(medication.getName());
 
-        // Truncate drugInfo to avoid exceeding QR code capacity
         String truncatedDrugInfo = drugInfo != null && drugInfo.length() > 500
                 ? drugInfo.substring(0, 500) + "..."
                 : drugInfo;
 
-        // Create the QR code content with medication details
         String qrContent = String.format(
                 "Medication ID: %d\n" +
                         "Name: %s\n" +
@@ -81,6 +98,8 @@ public class MedicationController {
                         "Frequency: %s\n" +
                         "Start Date: %s\n" +
                         "Patient ID: %d\n" +
+                        "Reminder Time: %s\n" +
+                        "Taken: %b\n" +
                         "OpenFDA Info: %s",
                 medication.getId(),
                 medication.getName(),
@@ -88,10 +107,11 @@ public class MedicationController {
                 medication.getFrequency(),
                 medication.getStartDate().toString(),
                 medication.getPatientId(),
+                medication.getReminderTime() != null ? medication.getReminderTime().toString() : "Not set",
+                medication.isTaken(),
                 truncatedDrugInfo != null ? truncatedDrugInfo : "Not available"
         );
 
-        // Log the length of qrContent to verify it's within a safe range
         logger.debug("QR code content length: {}", qrContent.length());
         if (qrContent.length() > 4000) {
             logger.warn("QR code content is too long ({} characters). Truncating further.", qrContent.length());
