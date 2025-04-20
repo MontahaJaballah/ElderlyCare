@@ -1,4 +1,0 @@
-package tn.elderlycare.medicationservice.dto;
-
-public class ReminderRequest {
-}
