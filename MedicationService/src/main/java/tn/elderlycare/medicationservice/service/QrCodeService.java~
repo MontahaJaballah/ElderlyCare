@@ -1,0 +1,4 @@
+package tn.elderlycare.medicationservice.service;
+
+public class QrCodeService {
+}
