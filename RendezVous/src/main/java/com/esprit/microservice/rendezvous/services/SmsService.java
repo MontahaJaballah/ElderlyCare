@@ -24,7 +24,6 @@ public class SmsService {
         try {
             Twilio.init(accountSid, authToken);
 
-            // Ensure the recipient number starts with "+"
             String formattedTo = to.startsWith("+") ? to : "+" + to;
             String formattedTwilioPhone = twilioPhoneNumber.startsWith("+") ? twilioPhoneNumber : "+" + twilioPhoneNumber;
 

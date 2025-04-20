@@ -28,8 +28,7 @@ public class ReminderService {
     @Autowired
     private SmsService smsService;
 
-    // Scheduled task to send reminders (every day at 9 AM)
-    @Scheduled(cron = "0 26 00 * * ?")  // Runs every day at 11:30 PM
+    @Scheduled(cron = "0 00 09 * * ?")  // Runs every day at 11:30 PM
     public void sendAppointmentReminders() {
         LocalDateTime start = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES); // Truncate to minutes
         LocalDateTime end = start.plusDays(1).truncatedTo(ChronoUnit.SECONDS);

@@ -48,6 +48,19 @@ public class RendezVousService {
             throw new IllegalArgumentException("Le professionnel n'est pas disponible à cette heure.");
         }
 
+        // Check for overlapping appointments within 30 minutes before or after
+        LocalDateTime start = dateHeure.minusMinutes(30);
+        LocalDateTime end = dateHeure.plusMinutes(30);
+
+        boolean hasConflict = rendezVousRepository.existsByProfessionnelSanteAndDateHeureBetween(
+                professionnelSante, start, end
+        );
+
+        if (hasConflict) {
+            throw new IllegalArgumentException("Ce créneau (et ceux proches de 30 minutes) est déjà réservé pour ce professionnel.");
+        }
+
+
         // Save the appointment
         RendezVous rendezVous = new RendezVous();
         rendezVous.setPersonneAgee(personneAgee);
@@ -102,12 +115,14 @@ public class RendezVousService {
         return rendezVousRepository.save(rendezVous);
     }
 
-    // Cancel appointment
+    // Delete appointment
     public void annulerRendezVous(Long id) {
         if (!rendezVousRepository.existsById(id)) {
             throw new IllegalArgumentException("Rendez-vous introuvable.");
         }
         rendezVousRepository.deleteById(id);
     }
+
+
 }
 

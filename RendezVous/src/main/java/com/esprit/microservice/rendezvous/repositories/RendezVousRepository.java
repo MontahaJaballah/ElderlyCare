@@ -22,5 +22,7 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
 
     List<RendezVous> findAllByDateHeureBetween(LocalDateTime start, LocalDateTime end);
 
+    boolean existsByProfessionnelSanteAndDateHeureBetween(ProfessionnelSante professionnel, LocalDateTime start, LocalDateTime end);
+
 }
 

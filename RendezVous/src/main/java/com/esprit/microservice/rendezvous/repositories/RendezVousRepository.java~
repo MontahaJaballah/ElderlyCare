@@ -19,5 +19,8 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
 
     @Query("SELECT r FROM RendezVous r WHERE r.dateHeure BETWEEN :start AND :end")
     List<RendezVous> findAppointmentsWithinTimeRange(LocalDateTime start, LocalDateTime end);
+
+    List<RendezVous> findAllByDateHeureBetween(LocalDateTime start, LocalDateTime end);
+
 }
 
