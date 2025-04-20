@@ -1,0 +1,26 @@
+package com.esprit.microservice.rendezvous.repositories;
+
+import com.esprit.microservice.rendezvous.entities.RendezVous;
+import com.esprit.microservice.rendezvous.entities.PersonneAgee;
+import com.esprit.microservice.rendezvous.entities.ProfessionnelSante;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Repository
+public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
+
+    List<RendezVous> findByPersonneAgee(PersonneAgee personneAgee);
+
+    List<RendezVous> findByProfessionnelSante(ProfessionnelSante professionnelSante);
+
+    @Query("SELECT r FROM RendezVous r WHERE r.dateHeure BETWEEN :start AND :end")
+    List<RendezVous> findAppointmentsWithinTimeRange(LocalDateTime start, LocalDateTime end);
+
+    List<RendezVous> findAllByDateHeureBetween(LocalDateTime start, LocalDateTime end);
+
+}
+

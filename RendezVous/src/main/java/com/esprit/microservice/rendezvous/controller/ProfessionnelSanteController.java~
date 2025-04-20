@@ -1,0 +1,4 @@
+package com.esprit.microservice.rendezvous.controller;
+
+public class ProfessionnelSanteController {
+}

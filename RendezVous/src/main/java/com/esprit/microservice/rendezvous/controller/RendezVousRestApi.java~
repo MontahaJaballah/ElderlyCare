@@ -1,0 +1,30 @@
+package com.esprit.microservice.rendezvous.controller;
+
+import com.esprit.microservice.rendezvous.entities.RendezVous;
+import com.esprit.microservice.rendezvous.services.RendezVousService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/rendezvous")
+@RequiredArgsConstructor
+public class RendezVousController {
+    private final RendezVousService rendezVousService;
+
+    @PostMapping("/ajouter")
+    public RendezVous ajouterRendezVous(@RequestBody RendezVous rendezVous) {
+        return rendezVousService.ajouterRendezVous(rendezVous);
+    }
+
+    @GetMapping("/parPersonne/{id}")
+    public List<RendezVous> getRendezVousParPersonne(@PathVariable Long id) {
+        return rendezVousService.getRendezVousParPersonneAgee(id);
+    }
+
+    @DeleteMapping("/annuler/{id}")
+    public void annulerRendezVous(@PathVariable Long id) {
+        rendezVousService.annulerRendezVous(id);
+    }
+}
