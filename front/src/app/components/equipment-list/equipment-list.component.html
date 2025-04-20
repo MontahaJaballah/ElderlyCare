@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <h2>Equipment List</h2>
+  
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <div class="mt-2">
+      <strong>Troubleshooting tips:</strong>
+      <ul>
+        <li>Make sure your Spring Boot application is running on port 8090</li>
+        <li>Check that the context path is set to '/equipment'</li>
+        <li>Verify that &#64;CrossOrigin is added to all controllers</li>
+        <li>Ensure all API endpoints match between frontend and backend</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Equipment list -->
+  <div class="row">
+    <div class="col-md-8">
+      <div *ngIf="equipment.length > 0; else noEquipment">
+        <div class="list-group">
+          <div *ngFor="let item of equipment" class="list-group-item">
+            <h5>{{ item.name }}</h5>
+            <p>{{ item.description }}</p>
+            <span class="badge" [ngClass]="{
+              'bg-success': item.status === 'AVAILABLE',
+              'bg-warning': item.status === 'IN_USE',
+              'bg-danger': item.status === 'MAINTENANCE'
+            }">{{ item.status }}</span>
+          </div>
+        </div>
+      </div>
+      <ng-template #noEquipment>
+        <p>No equipment found.</p>
+      </ng-template>
+    </div>
+
+    <!-- Availability Chart -->
+    <div class="col-md-4">
+      <div *ngIf="chartUrl" class="card">
+        <div class="card-body">
+          <h5 class="card-title">Equipment Availability</h5>
+          <img [src]="chartUrl" class="img-fluid" alt="Equipment Availability Chart">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
