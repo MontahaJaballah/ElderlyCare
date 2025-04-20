@@ -1,0 +1,54 @@
+package tn.elderlycare.medicationservice.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Data
+public class Medication {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Patient ID is required")
+    private Long patientId;
+
+    @NotBlank(message = "Medication name is required")
+    private String name;
+
+    @NotBlank(message = "Dosage is required")
+    private String dosage;
+
+    @NotBlank(message = "Frequency is required")
+    private String frequency;
+
+    @NotNull(message = "Start date is required")
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private LocalDateTime reminderTime;
+
+    private boolean taken;
+
+    public Medication() {
+    }
+
+    public Medication(Long id, Long patientId, String name, String dosage, String frequency,
+                      LocalDate startDate, LocalDate endDate, LocalDateTime reminderTime, boolean taken) {
+        this.id = id;
+        this.patientId = patientId;
+        this.name = name;
+        this.dosage = dosage;
+        this.frequency = frequency;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.reminderTime = reminderTime;
+        this.taken = taken;
+    }
+}
