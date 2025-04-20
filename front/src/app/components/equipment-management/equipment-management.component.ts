@@ -14,15 +14,19 @@ export class EquipmentManagementComponent implements OnInit {
   searchCode: string = '';
   weatherCity: string = 'tunis';
   aiQuestion: string = '';
-  aiResponse: string = '';
+  aiResponse: any = null;
+  weatherData: any = null;
+  flaggedEquipment: any[] = [];
   error: string = '';
   success: string = '';
   activeTab: string = 'list';
+  equipmentStats: any = null;
 
   constructor(private readonly equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
     this.loadEquipment();
+    this.loadEquipmentStats();
   }
 
   loadEquipment(): void {
@@ -73,8 +77,8 @@ export class EquipmentManagementComponent implements OnInit {
   getWeather(): void {
     this.equipmentService.getWeatherMonitoring(this.weatherCity).subscribe({
       next: (data) => {
+        this.weatherData = data;
         this.success = `Weather data received for ${this.weatherCity}`;
-        console.log('Weather data:', data);
       },
       error: (err) => this.error = 'Failed to get weather data: ' + err.message
     });
@@ -83,6 +87,7 @@ export class EquipmentManagementComponent implements OnInit {
   flagOldEquipment(): void {
     this.equipmentService.flagOldEquipment().subscribe({
       next: (data) => {
+        this.flaggedEquipment = data;
         this.success = 'Old equipment flagged';
         this.loadEquipment(); // Reload to see updates
       },
@@ -100,6 +105,19 @@ export class EquipmentManagementComponent implements OnInit {
         error: (err) => this.error = 'Failed to get AI response: ' + err.message
       });
     }
+  }
+
+  loadEquipmentStats(): void {
+    this.equipmentService.getEquipmentAvailabilityChart().subscribe({
+      next: (data) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.equipmentStats = reader.result;
+        };
+        reader.readAsDataURL(data);
+      },
+      error: (err) => console.error('Failed to load equipment stats:', err)
+    });
   }
 
   generatePDF(id: number): void {
