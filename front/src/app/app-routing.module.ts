@@ -4,6 +4,7 @@ import { EquipmentListComponent } from './components/equipment-list/equipment-li
 import { EquipmentManagementComponent } from './components/equipment-management/equipment-management.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
+import { DoctorComponent } from './components/doctor/doctor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentManagementComponent },
   { path: 'equipment-list', component: EquipmentListComponent },
   { path: 'appointment', component: AppointmentFormComponent },
+  { path: 'doctors', component: DoctorComponent },
   { path: "**", component: HomeComponent }
 ];
 
