@@ -1,0 +1,34 @@
+2025-04-21T23:01:47.821+01:00 DEBUG 24872 --- [medication-service] [http-nio-8082-exec-3] o.apache.coyote.http11.Http11Processor   : Error state [CLOSE_CONNECTION_NOW] reported while processing request
+
+java.io.EOFException: null
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.fillReadBuffer(NioEndpoint.java:1295) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.read(NioEndpoint.java:1183) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11InputBuffer.fill(Http11InputBuffer.java:795) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:351) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:270) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T23:01:47.821+01:00 DEBUG 24872 --- [medication-service] [http-nio-8082-exec-10] o.apache.coyote.http11.Http11Processor   : Error state [CLOSE_CONNECTION_NOW] reported while processing request
+
+java.io.EOFException: null
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.fillReadBuffer(NioEndpoint.java:1295) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.read(NioEndpoint.java:1183) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11InputBuffer.fill(Http11InputBuffer.java:795) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:351) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:270) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.39.jar:10.1.39]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+

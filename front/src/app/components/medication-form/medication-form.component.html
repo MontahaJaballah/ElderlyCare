@@ -1,0 +1,208 @@
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">Manage Your Medications</span>
+            <h1 class="text-capitalize mb-5 text-lg">Medication</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="appoinment section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="mt-3">
+            <div class="feature-icon mb-3">
+              <i class="icofont-prescription text-lg"></i>
+            </div>
+            <span class="h3">Contact Pharmacy Support!</span>
+            <h2 class="text-color mt-3">+84 789 1256</h2>
+          </div>
+        </div>
+  
+        <div class="col-lg-8">
+          <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+            <h2 class="mb-2 title-color">Add a Medication</h2>
+            <p class="mb-4">Fill out the form below to add a new medication to your record.</p>
+  
+            <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ error }}
+              <button type="button" class="btn-close" (click)="error = ''"></button>
+            </div>
+  
+            <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ success }}
+              <button type="button" class="btn-close" (click)="success = ''"></button>
+            </div>
+  
+            <form [formGroup]="medicationForm" (ngSubmit)="onSubmit()" class="appoinment-form">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="name" placeholder="Medication Name">
+                    <div *ngIf="medicationForm.get('name')?.invalid && medicationForm.get('name')?.touched" class="text-danger">
+                      Medication name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="dosage" placeholder="Dosage (e.g., 10mg)">
+                    <div *ngIf="medicationForm.get('dosage')?.invalid && medicationForm.get('dosage')?.touched" class="text-danger">
+                      Dosage is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" formControlName="frequency" placeholder="Frequency (e.g., Twice daily)">
+                    <div *ngIf="medicationForm.get('frequency')?.invalid && medicationForm.get('frequency')?.touched" class="text-danger">
+                      Frequency is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <input type="date" class="form-control" formControlName="startDate">
+                    <div *ngIf="medicationForm.get('startDate')?.invalid && medicationForm.get('startDate')?.touched" class="text-danger">
+                      Start date is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <input type="date" class="form-control" formControlName="endDate" placeholder="End Date (Optional)">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-group-2 mb-4">
+                <textarea class="form-control" rows="6" formControlName="notes" placeholder="Notes (Optional)"></textarea>
+              </div>
+  
+              <button type="submit" class="btn btn-main btn-round-full" [disabled]="isSubmitting">
+                <span *ngIf="!isSubmitting">Add Medication <i class="icofont-simple-right ml-2"></i></span>
+                <span *ngIf="isSubmitting">Processing... <i class="icofont-spinner icofont-spin ml-2"></i></span>
+              </button>
+            </form>
+  
+            <h2 class="mb-2 title-color mt-5">Your Medications</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reminder Time</th>
+                    <th>Taken</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let medication of medications">
+                    <td>{{ medication.name }}</td>
+                    <td>{{ medication.dosage }}</td>
+                    <td>{{ medication.frequency }}</td>
+                    <td>{{ medication.startDate }}</td>
+                    <td>{{ medication.endDate || 'N/A' }}</td>
+                    <td>{{ medication.reminderTime || 'Not set' }}</td>
+                    <td>{{ medication.taken ? 'Yes' : 'No' }}</td>
+                    <td>
+                      <button class="btn btn-sm btn-warning" (click)="editMedication(medication)">Edit</button>
+                      <button class="btn btn-sm btn-primary ml-2" (click)="setReminderForMedication(medication.id)">Set Reminder</button>
+                      <button class="btn btn-sm btn-info ml-2" (click)="showQrCode(medication.id)">Show QR</button>
+                      <button class="btn btn-sm btn-danger ml-2" (click)="deleteMedication(medication.id)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+  
+            <div *ngIf="selectedMedicationForEdit" class="mt-4">
+              <h3 class="mb-2 title-color">Edit Medication: {{ selectedMedicationForEdit.name }}</h3>
+              <form [formGroup]="updateForm" (ngSubmit)="updateMedication()" class="appoinment-form">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="name" placeholder="Medication Name">
+                      <div *ngIf="updateForm.get('name')?.invalid && updateForm.get('name')?.touched" class="text-danger">
+                        Medication name is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="dosage" placeholder="Dosage (e.g., 10mg)">
+                      <div *ngIf="updateForm.get('dosage')?.invalid && updateForm.get('dosage')?.touched" class="text-danger">
+                        Dosage is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="frequency" placeholder="Frequency (e.g., Twice daily)">
+                      <div *ngIf="updateForm.get('frequency')?.invalid && updateForm.get('frequency')?.touched" class="text-danger">
+                        Frequency is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="date" class="form-control" formControlName="startDate">
+                      <div *ngIf="updateForm.get('startDate')?.invalid && updateForm.get('startDate')?.touched" class="text-danger">
+                        Start date is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="date" class="form-control" formControlName="endDate" placeholder="End Date (Optional)">
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="form-group-2 mb-4">
+                  <textarea class="form-control" rows="6" formControlName="notes" placeholder="Notes (Optional)"></textarea>
+                </div>
+  
+                <button type="submit" class="btn btn-main btn-round-full" [disabled]="isSubmitting">
+                  <span *ngIf="!isSubmitting">Update Medication <i class="icofont-simple-right ml-2"></i></span>
+                  <span *ngIf="isSubmitting">Processing... <i class="icofont-spinner icofont-spin ml-2"></i></span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-round-full ml-2" (click)="cancelEdit()">Cancel</button>
+              </form>
+            </div>
+  
+            <div *ngIf="selectedMedicationId !== null" class="mt-4">
+              <h3 class="mb-2 title-color">Set Reminder for {{ getSelectedMedicationName() }}</h3>
+              <form [formGroup]="reminderForm" (ngSubmit)="setReminder()" class="appoinment-form">
+                <div class="form-group">
+                  <input type="datetime-local" class="form-control" formControlName="reminderTime">
+                  <div *ngIf="reminderForm.get('reminderTime')?.invalid && reminderForm.get('reminderTime')?.touched" class="text-danger">
+                    Reminder time is required
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-main btn-round-full" [disabled]="isSubmitting">
+                  <span *ngIf="!isSubmitting">Set Reminder <i class="icofont-simple-right ml-2"></i></span>
+                  <span *ngIf="isSubmitting">Processing... <i class="icofont-spinner icofont-spin ml-2"></i></span>
+                </button>
+              </form>
+            </div>
+  
+            <div *ngIf="qrCodeUrl" class="mt-4">
+              <h3 class="mb-2 title-color">QR Code</h3>
+              <img [src]="qrCodeUrl" alt="QR Code" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,54 @@
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block text-center">
+            <span class="text-white">View All Reminders</span>
+            <h1 class="text-capitalize mb-5 text-lg">Reminders</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="appoinment section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="appoinment-wrap mt-5 mt-lg-0">
+            <h2 class="mb-2 title-color">All Medication Reminders</h2>
+  
+            <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ error }}
+              <button type="button" class="btn-close" (click)="error = ''"></button>
+            </div>
+  
+            <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ success }}
+              <button type="button" class="btn-close" (click)="success = ''"></button>
+            </div>
+  
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Reminder Time</th>
+                    <th>Taken</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let reminder of reminders">
+                    <td>{{ reminder.name }}</td>
+                    <td>{{ reminder.reminderTime || 'Not set' }}</td>
+                    <td>{{ reminder.taken ? 'Yes' : 'No' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
