@@ -21,6 +21,7 @@ export class MedicationFormComponent implements OnInit {
   selectedMedicationId: number | null = null;
   selectedMedicationForEdit: Medication | null = null;
   qrCodeUrl: string | null = null;
+  viewMode: 'table' | 'grid' = 'table';
 
   constructor(
     private readonly medicationService: MedicationService,
@@ -80,19 +81,21 @@ export class MedicationFormComponent implements OnInit {
     this.error = '';
     this.success = '';
 
+    if (this.medicationForm.invalid) {
+      this.error = 'Please fill in all required fields';
+      return;
+    }
+
     const formValues = {
-      ...this.medicationForm.value,
+      name: this.medicationForm.value.name,
+      dosage: this.medicationForm.value.dosage,
+      frequency: this.medicationForm.value.frequency,
+      startDate: this.medicationForm.value.startDate ? new Date(this.medicationForm.value.startDate).toISOString().split('T')[0] : null,
+      endDate: this.medicationForm.value.endDate ? new Date(this.medicationForm.value.endDate).toISOString().split('T')[0] : null,
+      notes: this.medicationForm.value.notes || '',
       patientId: this.patientId,
       taken: false
     };
-
-    // Convert dates to ISO string format
-    if (formValues.startDate) {
-      formValues.startDate = new Date(formValues.startDate).toISOString().split('T')[0];
-    }
-    if (formValues.endDate) {
-      formValues.endDate = new Date(formValues.endDate).toISOString().split('T')[0];
-    }
 
     this.medicationService.addMedication(this.patientId, formValues).subscribe({
       next: (response: Medication) => {
@@ -117,7 +120,7 @@ export class MedicationFormComponent implements OnInit {
       return;
     }
 
-    const reminderTime = this.reminderForm.value.reminderTime;
+    const reminderTime = new Date(this.reminderForm.value.reminderTime).toISOString();
     this.medicationService.setReminder(this.selectedMedicationId, reminderTime).subscribe({
       next: () => {
         this.success = 'Reminder set successfully!';
@@ -201,5 +204,19 @@ export class MedicationFormComponent implements OnInit {
   getSelectedMedicationName(): string {
     const medication = this.medications.find(m => m.id === this.selectedMedicationId);
     return medication ? medication.name : '';
+  }
+
+  clearReminder(medicationId: number): void {
+    if (confirm('Are you sure you want to clear this reminder?')) {
+      this.medicationService.clearReminder(medicationId).subscribe({
+        next: () => {
+          this.success = 'Reminder cleared successfully!';
+          this.loadMedications();
+        },
+        error: (err: any) => {
+          this.error = 'Failed to clear reminder: ' + err.message;
+        }
+      });
+    }
   }
 }
