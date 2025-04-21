@@ -10773,3 +10773,1121 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
 	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
 
+2025-04-21T19:56:23.518+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-04-21T19:56:23.518+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-04-21T19:56:26.689+01:00  INFO 4056 --- [medication-service] [scheduling-1] t.e.m.service.MedicationService          : Checking for overdue reminders...
+2025-04-21T19:56:26.690+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2025-04-21T19:56:26.690+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1262059219<open>)] for JPA transaction
+2025-04-21T19:56:26.690+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.jdbc.datasource.DataSourceUtils      : Setting JDBC Connection [HikariProxyConnection@1934254374 wrapping conn0: url=jdbc:h2:mem:medicationdb user=SA] read-only
+2025-04-21T19:56:26.691+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-04-21T19:56:26.691+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : begin
+2025-04-21T19:56:26.691+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@12c92f9d]
+2025-04-21T19:56:26.693+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.create         : Created new SQL alias : m1_0
+2025-04-21T19:56:26.693+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(tn.elderlycare.medicationservice.entity.Medication(10))] with identifierForTableGroup [tn.elderlycare.medicationservice.entity.Medication] for NavigablePath [tn.elderlycare.medicationservice.entity.Medication] 
+2025-04-21T19:56:26.695+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
+ \-EntityResultImpl [tn.elderlycare.medicationservice.entity.Medication(10)]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).dosage]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).endDate]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).frequency]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).name]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).patientId]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).reminderTime]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).startDate]
+ |  \-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(10).taken]
+
+2025-04-21T19:56:26.695+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (m1 : tn.elderlycare.medicationservice.entity.Medication(10)) {
+          primaryTableReference : medication as m1_0
+        }
+      }
+    }
+
+2025-04-21T19:56:26.696+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.exec               : Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-04-21T19:56:26.696+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.SQL                        : select m1_0.id,m1_0.dosage,m1_0.end_date,m1_0.frequency,m1_0.name,m1_0.patient_id,m1_0.reminder_time,m1_0.start_date,m1_0.taken from medication m1_0
+2025-04-21T19:56:26.698+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.results                : Initializer list:
+	  tn.elderlycare.medicationservice.entity.Medication(10) -> EntityJoinedFetchInitializer(tn.elderlycare.medicationservice.entity.Medication(10))@224456918 (SingleTableEntityPersister(tn.elderlycare.medicationservice.entity.Medication))
+
+2025-04-21T19:56:26.699+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2025-04-21T19:56:26.699+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1262059219<open>)]
+2025-04-21T19:56:26.699+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : committing
+2025-04-21T19:56:26.699+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.jdbc.datasource.DataSourceUtils      : Resetting read-only flag of JDBC Connection [HikariProxyConnection@1934254374 wrapping conn0: url=jdbc:h2:mem:medicationdb user=SA]
+2025-04-21T19:56:26.699+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1262059219<open>)] after transaction
+2025-04-21T19:56:27.373+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082: registering service...
+2025-04-21T19:56:27.375+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:56:27.373+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-04-21T19:56:27.375+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-04-21T19:56:27.376+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:56:27.385+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-04-21T19:56:27.386+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/MEDICATION-SERVICE
+2025-04-21T19:56:27.387+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:27.390+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = DESKTOP-1289639:medication-service:8082, appName = MEDICATION-SERVICE, hostName = 192.168.14.54, status = UP, ipAddr = 192.168.14.54, port = 8082, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@1b2c513e] as "application/json"
+2025-04-21T19:56:27.394+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000054 preparing request execution
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000054 target auth state: UNCHALLENGED
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000054 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000054 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000054 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000054 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000054 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:27.395+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000054 acquired ep-0000000054
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000054 acquired endpoint ep-0000000054
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000054 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000054 connecting endpoint (null)
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000054 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000055 preparing request execution
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000055 target auth state: UNCHALLENGED
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000055 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000055 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000055 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000055 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000055 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:27.396+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000055 acquired ep-0000000055
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000055 acquired endpoint ep-0000000055
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000055 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000055 connecting endpoint (null)
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000055 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.397+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.413+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082?status=UP&lastDirtyTimestamp=1745261246470
+2025-04-21T19:56:27.420+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:27.420+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:27.420+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.420+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000056 preparing request execution
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000056 target auth state: UNCHALLENGED
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000056 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000056 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:27.421+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000056 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000056 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000056 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000056 acquired ep-0000000056
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000056 acquired endpoint ep-0000000056
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000056 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000056 connecting endpoint (null)
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000056 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:27.422+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-53 close connection IMMEDIATE
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-54 close connection IMMEDIATE
+2025-04-21T19:56:27.435+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000054 endpoint closed
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000055 endpoint closed
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000054 discarding endpoint
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000054 releasing endpoint
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000054 connection is not kept alive)
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000054 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.436+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000055 discarding endpoint
+2025-04-21T19:56:27.437+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000055 releasing endpoint
+2025-04-21T19:56:27.437+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000055 connection is not kept alive)
+2025-04-21T19:56:27.437+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000055 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.437+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.register(RestTemplateEurekaHttpClient.java:87)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 21 more
+
+2025-04-21T19:56:27.438+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplicationsInternal(RestTemplateEurekaHttpClient.java:174)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplications(RestTemplateEurekaHttpClient.java:162)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 23 more
+
+2025-04-21T19:56:27.439+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:27.439+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:27.440+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2025-04-21T19:56:27.439+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:56:27.440+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: null, is fetching remote regions? false 
+2025-04-21T19:56:27.441+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:56:27.451+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-55 close connection IMMEDIATE
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000056 endpoint closed
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000056 discarding endpoint
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000056 releasing endpoint
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000056 connection is not kept alive)
+2025-04-21T19:56:27.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000056 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:27.453+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.sendHeartBeat(RestTemplateEurekaHttpClient.java:119)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 20 more
+
+2025-04-21T19:56:27.454+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:27.454+01:00 ERROR 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:56:53.530+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-04-21T19:56:53.530+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082: registering service...
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-04-21T19:56:57.452+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-04-21T19:56:57.453+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:56:57.452+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:56:57.461+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/MEDICATION-SERVICE
+2025-04-21T19:56:57.461+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-04-21T19:56:57.462+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:57.465+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = DESKTOP-1289639:medication-service:8082, appName = MEDICATION-SERVICE, hostName = 192.168.14.54, status = UP, ipAddr = 192.168.14.54, port = 8082, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@1b2c513e] as "application/json"
+2025-04-21T19:56:57.468+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000057 preparing request execution
+2025-04-21T19:56:57.468+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000057 target auth state: UNCHALLENGED
+2025-04-21T19:56:57.468+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000057 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000057 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000057 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000057 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000057 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000057 acquired ep-0000000057
+2025-04-21T19:56:57.469+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000057 acquired endpoint ep-0000000057
+2025-04-21T19:56:57.470+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000057 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:57.470+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000057 connecting endpoint (null)
+2025-04-21T19:56:57.470+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000057 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.470+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:57.471+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:57.471+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:57.471+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000058 preparing request execution
+2025-04-21T19:56:57.471+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.472+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000058 target auth state: UNCHALLENGED
+2025-04-21T19:56:57.472+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000058 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:57.472+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000058 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:57.472+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000058 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:57.473+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000058 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.473+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:57.473+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000058 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:57.473+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.474+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000058 acquired ep-0000000058
+2025-04-21T19:56:57.474+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000058 acquired endpoint ep-0000000058
+2025-04-21T19:56:57.474+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000058 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:57.474+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000058 connecting endpoint (null)
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082?status=UP&lastDirtyTimestamp=1745261246470
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000058 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-56 close connection IMMEDIATE
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000057 endpoint closed
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000057 discarding endpoint
+2025-04-21T19:56:57.475+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000057 releasing endpoint
+2025-04-21T19:56:57.476+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000057 connection is not kept alive)
+2025-04-21T19:56:57.476+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000057 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.477+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.register(RestTemplateEurekaHttpClient.java:87)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 21 more
+
+2025-04-21T19:56:57.478+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:57.478+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:56:57.479+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:56:57.480+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:56:57.481+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000059 preparing request execution
+2025-04-21T19:56:57.482+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000059 target auth state: UNCHALLENGED
+2025-04-21T19:56:57.482+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000059 proxy auth state: UNCHALLENGED
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000059 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000059 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000059 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000059 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000059 acquired ep-0000000059
+2025-04-21T19:56:57.483+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000059 acquired endpoint ep-0000000059
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000059 opening connection {}->[http://localhost:8761]
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000059 connecting endpoint (null)
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000059 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:56:57.484+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.498+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:57.498+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:56:57.498+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.498+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:56:57.514+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:57.514+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:56:57.514+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-57 close connection IMMEDIATE
+2025-04-21T19:56:57.514+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000058 endpoint closed
+2025-04-21T19:56:57.514+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000058 discarding endpoint
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000058 releasing endpoint
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000058 connection is not kept alive)
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000058 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-58 close connection IMMEDIATE
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000059 endpoint closed
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000059 discarding endpoint
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000059 releasing endpoint
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000059 connection is not kept alive)
+2025-04-21T19:56:57.515+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000059 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:56:57.515+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplicationsInternal(RestTemplateEurekaHttpClient.java:174)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplications(RestTemplateEurekaHttpClient.java:162)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 23 more
+
+2025-04-21T19:56:57.516+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:57.516+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2025-04-21T19:56:57.517+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: null, is fetching remote regions? false 
+2025-04-21T19:56:57.516+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.sendHeartBeat(RestTemplateEurekaHttpClient.java:119)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 20 more
+
+2025-04-21T19:56:57.517+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:56:57.517+01:00 ERROR 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:57:23.533+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2025-04-21T19:57:23.533+01:00 DEBUG 4056 --- [medication-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2025-04-21T19:57:26.057+01:00  INFO 4056 --- [medication-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-04-21T19:57:26.057+01:00 DEBUG 4056 --- [medication-service] [AsyncResolver-bootstrap-executor-%d] c.n.discovery.endpoint.EndpointUtils     : The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-21T19:57:26.058+01:00 DEBUG 4056 --- [medication-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-21T19:57:26.058+01:00 DEBUG 4056 --- [medication-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.a.ZoneAffinityClusterResolver  : Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-21T19:57:26.059+01:00 DEBUG 4056 --- [medication-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.shared.resolver.AsyncResolver      : Resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-21T19:57:26.680+01:00  INFO 4056 --- [medication-service] [scheduling-1] t.e.m.service.MedicationService          : Checking for overdue reminders...
+2025-04-21T19:57:26.680+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2025-04-21T19:57:26.681+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1761664166<open>)] for JPA transaction
+2025-04-21T19:57:26.681+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.jdbc.datasource.DataSourceUtils      : Setting JDBC Connection [HikariProxyConnection@67037777 wrapping conn0: url=jdbc:h2:mem:medicationdb user=SA] read-only
+2025-04-21T19:57:26.681+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+2025-04-21T19:57:26.681+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : begin
+2025-04-21T19:57:26.681+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7e164bce]
+2025-04-21T19:57:26.682+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.create         : Created new SQL alias : m1_0
+2025-04-21T19:57:26.682+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(tn.elderlycare.medicationservice.entity.Medication(11))] with identifierForTableGroup [tn.elderlycare.medicationservice.entity.Medication] for NavigablePath [tn.elderlycare.medicationservice.entity.Medication] 
+2025-04-21T19:57:26.684+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
+ \-EntityResultImpl [tn.elderlycare.medicationservice.entity.Medication(11)]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).dosage]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).endDate]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).frequency]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).name]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).patientId]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).reminderTime]
+ |  +-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).startDate]
+ |  \-BasicFetch [tn.elderlycare.medicationservice.entity.Medication(11).taken]
+
+2025-04-21T19:57:26.684+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
+    SelectStatement {
+      FromClause {
+        StandardTableGroup (m1 : tn.elderlycare.medicationservice.entity.Medication(11)) {
+          primaryTableReference : medication as m1_0
+        }
+      }
+    }
+
+2025-04-21T19:57:26.685+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.sql.exec               : Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+2025-04-21T19:57:26.685+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.SQL                        : select m1_0.id,m1_0.dosage,m1_0.end_date,m1_0.frequency,m1_0.name,m1_0.patient_id,m1_0.reminder_time,m1_0.start_date,m1_0.taken from medication m1_0
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] org.hibernate.orm.results                : Initializer list:
+	  tn.elderlycare.medicationservice.entity.Medication(11) -> EntityJoinedFetchInitializer(tn.elderlycare.medicationservice.entity.Medication(11))@845224511 (SingleTableEntityPersister(tn.elderlycare.medicationservice.entity.Medication))
+
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1761664166<open>)]
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.h.e.t.internal.TransactionImpl         : committing
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.jdbc.datasource.DataSourceUtils      : Resetting read-only flag of JDBC Connection [HikariProxyConnection@67037777 wrapping conn0: url=jdbc:h2:mem:medicationdb user=SA]
+2025-04-21T19:57:26.686+01:00 DEBUG 4056 --- [medication-service] [scheduling-1] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1761664166<open>)] after transaction
+2025-04-21T19:57:27.493+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082: registering service...
+2025-04-21T19:57:27.493+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:57:27.502+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/MEDICATION-SERVICE
+2025-04-21T19:57:27.503+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:57:27.506+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = DESKTOP-1289639:medication-service:8082, appName = MEDICATION-SERVICE, hostName = 192.168.14.54, status = UP, ipAddr = 192.168.14.54, port = 8082, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@1b2c513e] as "application/json"
+2025-04-21T19:57:27.508+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000060 preparing request execution
+2025-04-21T19:57:27.510+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000060 target auth state: UNCHALLENGED
+2025-04-21T19:57:27.510+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000060 proxy auth state: UNCHALLENGED
+2025-04-21T19:57:27.510+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000060 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:57:27.510+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000060 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000060 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000060 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000060 acquired ep-0000000060
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000060 acquired endpoint ep-0000000060
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000060 opening connection {}->[http://localhost:8761]
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000060 connecting endpoint (null)
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000060 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.511+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:57:27.512+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:57:27.512+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-04-21T19:57:27.524+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:57:27.524+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.524+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-04-21T19:57:27.525+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-04-21T19:57:27.525+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Clearing quarantined list of size 1
+2025-04-21T19:57:27.532+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082?status=UP&lastDirtyTimestamp=1745261246470
+2025-04-21T19:57:27.533+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-59 close connection IMMEDIATE
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000060 endpoint closed
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000060 discarding endpoint
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000060 releasing endpoint
+2025-04-21T19:57:27.539+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:57:27.541+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000060 connection is not kept alive)
+2025-04-21T19:57:27.541+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000060 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.541+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000061 preparing request execution
+2025-04-21T19:57:27.542+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000061 target auth state: UNCHALLENGED
+2025-04-21T19:57:27.542+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000061 proxy auth state: UNCHALLENGED
+2025-04-21T19:57:27.542+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000061 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:57:27.543+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000061 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:57:27.543+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000061 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.543+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000061 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000061 acquired ep-0000000061
+2025-04-21T19:57:27.543+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.register(RestTemplateEurekaHttpClient.java:87)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 21 more
+
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000061 acquired endpoint ep-0000000061
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000061 opening connection {}->[http://localhost:8761]
+2025-04-21T19:57:27.544+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000061 connecting endpoint (null)
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000061 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.544+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:57:27.544+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.544+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-InstanceInfoReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000062 preparing request execution
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000062 target auth state: UNCHALLENGED
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ProtocolExec   : ex-0000000062 proxy auth state: UNCHALLENGED
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000062 acquiring connection with route {}->[http://localhost:8761]
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000062 acquiring endpoint (180000 MILLISECONDS)
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000062 endpoint lease request (180000 MILLISECONDS) [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000062 endpoint leased [route: {}->[http://localhost:8761]][total available: 0; route allocated: 1 of 5; total allocated: 1 of 25]
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ex-0000000062 acquired ep-0000000062
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ex-0000000062 acquired endpoint ep-0000000062
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.http.impl.classic.ConnectExec    : ex-0000000062 opening connection {}->[http://localhost:8761]
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000062 connecting endpoint (null)
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000062 connecting endpoint to http://localhost:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolving remote address
+2025-04-21T19:57:27.545+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : localhost resolved to [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1]
+2025-04-21T19:57:27.547+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/127.0.0.1:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.570+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:57:27.570+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/127.0.0.1:8761 failed (class java.net.ConnectException); retrying connection to the next address
+2025-04-21T19:57:27.570+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.570+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connecting null->localhost/[0:0:0:0:0:0:0:1]:8761 (180000 MILLISECONDS)
+2025-04-21T19:57:27.571+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:57:27.571+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] .i.i.DefaultHttpClientConnectionOperator : http://localhost:8761 connection to localhost/[0:0:0:0:0:0:0:1]:8761 failed (class java.net.ConnectException); terminating operation
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-60 close connection IMMEDIATE
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.DefaultManagedHttpClientConnection : http-outgoing-61 close connection IMMEDIATE
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000061 endpoint closed
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000061 discarding endpoint
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000062 endpoint closed
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000061 releasing endpoint
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000061 connection is not kept alive)
+2025-04-21T19:57:27.572+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.a.h.c.h.i.classic.InternalHttpClient   : ep-0000000062 discarding endpoint
+2025-04-21T19:57:27.573+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000061 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.573+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000062 releasing endpoint
+2025-04-21T19:57:27.573+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000062 connection is not kept alive)
+2025-04-21T19:57:27.573+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] h.i.i.PoolingHttpClientConnectionManager : ep-0000000062 connection released [route: {}->[http://localhost:8761]][total available: 0; route allocated: 0 of 5; total allocated: 0 of 25]
+2025-04-21T19:57:27.574+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.sendHeartBeat(RestTemplateEurekaHttpClient.java:119)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 20 more
+
+2025-04-21T19:57:27.575+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:57:27.575+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:926)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:906)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:841)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:702)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplicationsInternal(RestTemplateEurekaHttpClient.java:174)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.getApplications(RestTemplateEurekaHttpClient.java:162)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:547)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:602)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$2(RestTemplateTransportClientFactory.java:145)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:900)
+	... 23 more
+
+2025-04-21T19:57:27.576+01:00  WARN 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-04-21T19:57:27.575+01:00 ERROR 4056 --- [medication-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845) ~[eureka-client-2.0.4.jar:2.0.4]
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402) ~[eureka-client-2.0.4.jar:2.0.4]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-04-21T19:57:27.577+01:00  INFO 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MEDICATION-SERVICE/DESKTOP-1289639:medication-service:8082 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1046)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:961)
+	at com.netflix.discovery.DiscoveryClient.refreshRegistry(DiscoveryClient.java:1473)
+	at com.netflix.discovery.DiscoveryClient$CacheRefreshThread.run(DiscoveryClient.java:1441)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+2025-04-21T19:57:27.577+01:00 DEBUG 4056 --- [medication-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: null, is fetching remote regions? false 
