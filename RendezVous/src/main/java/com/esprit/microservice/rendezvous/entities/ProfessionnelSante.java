@@ -28,8 +28,9 @@ public class ProfessionnelSante implements Serializable {
     @Column(name = "nom")
     private String nom;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "specialite")
-    private String specialite;
+    private Specialite specialite;
 
     @Column(name = "telephone")
     private String telephone;

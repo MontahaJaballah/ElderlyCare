@@ -1,0 +1,27 @@
+.btn-main-2 {
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.testimonial-wrap,
+.testimonial-wrap-2 {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.testimonial-block.style-2 {
+    margin: 0 10px 30px 10px;
+}
+
+.appoinment-form .form-group {
+    margin-bottom: 20px;
+}
+
+.appoinment-form .form-group-2 {
+    margin-bottom: 20px;
+}
+
+.appoinment-form textarea.form-control {
+    height: auto;
+    min-height: 120px;
+}

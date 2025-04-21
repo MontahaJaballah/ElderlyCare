@@ -13,7 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rendezvous")
+@RequestMapping("/api/rendezvous")
 @RequiredArgsConstructor
 public class RendezVousController {
     private final RendezVousService rendezVousService;
@@ -46,14 +46,5 @@ public class RendezVousController {
     @DeleteMapping("/annuler/{id}")
     public void annulerRendezVous(@PathVariable Long id) {
         rendezVousService.annulerRendezVous(id);
-    }
-
-    private final SmsService smsService;
-
-
-    @GetMapping("/send")
-    public String testSms(@RequestParam String to, @RequestParam String message) {
-        smsService.sendSms(to, message);
-        return "SMS sent (Check logs)";
     }
 }

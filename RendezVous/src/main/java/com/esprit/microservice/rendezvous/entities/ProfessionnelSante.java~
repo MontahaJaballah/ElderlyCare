@@ -28,6 +28,7 @@ public class ProfessionnelSante implements Serializable {
     @Column(name = "nom")
     private String nom;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "specialite")
     private String specialite;
 
@@ -42,6 +43,5 @@ public class ProfessionnelSante implements Serializable {
     private Set<RendezVous> rendezVous;
 
     @OneToMany(mappedBy = "professionnelSante", cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Disponibilite> disponibilites;
 }

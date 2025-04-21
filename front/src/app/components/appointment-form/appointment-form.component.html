@@ -1,0 +1,116 @@
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Book your Appointment</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Appointment</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="appoinment section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="mt-3">
+                    <div class="feature-icon mb-3">
+                        <i class="icofont-support text-lg"></i>
+                    </div>
+                    <span class="h3">Call for an Emergency Service!</span>
+                    <h2 class="text-color mt-3">+84 789 1256 </h2>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+                    <h2 class="mb-2 title-color">Book an appointment</h2>
+                    <p class="mb-4">Fill out the form below to schedule an appointment with one of our specialists.</p>
+
+                    <!-- Alert messages -->
+                    <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" (click)="error = ''"></button>
+                    </div>
+
+                    <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ success }}
+                        <button type="button" class="btn-close" (click)="success = ''"></button>
+                    </div>
+
+                    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()" class="appoinment-form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="specialite">
+                                        <option value="">Select Department</option>
+                                        <option *ngFor="let specialite of specialites" [value]="specialite">{{
+                                            specialite }}</option>
+                                    </select>
+                                    <div *ngIf="appointmentForm.get('specialite')?.invalid && appointmentForm.get('specialite')?.touched"
+                                        class="text-danger">
+                                        Department is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="idProfessionnel">
+                                        <option value="">Select Doctor</option>
+                                        <option *ngFor="let prof of filteredProfessionnels"
+                                            [value]="prof.idProfessionnelSante">{{ prof.prenom }} {{ prof.nom }}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="appointmentForm.get('idProfessionnel')?.invalid && appointmentForm.get('idProfessionnel')?.touched"
+                                        class="text-danger">
+                                        Doctor selection is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control" formControlName="date">
+                                    <div *ngIf="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched"
+                                        class="text-danger">
+                                        Date is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <select class="form-control" formControlName="heure">
+                                        <option value="">Select Time</option>
+                                        <option *ngFor="let slot of availableTimeSlots" [value]="slot">{{ slot }}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="appointmentForm.get('heure')?.invalid && appointmentForm.get('heure')?.touched"
+                                        class="text-danger">
+                                        Time slot is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group-2 mb-4">
+                            <textarea class="form-control" rows="6" formControlName="remarques"
+                                placeholder="Remarques (Optionnel)"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-main btn-round-full" [disabled]="isSubmitting">
+                            <span *ngIf="!isSubmitting">Make Appointment <i
+                                    class="icofont-simple-right ml-2"></i></span>
+                            <span *ngIf="isSubmitting">Processing... <i
+                                    class="icofont-spinner icofont-spin ml-2"></i></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,95 @@
+/* 
+ * Global styles that need to be applied across components
+ * This file should be imported in the styles array of angular.json
+ */
+
+/* Fix for Bootstrap conflicts */
+.btn-main, .btn-main-2, .btn-solid-border {
+  display: inline-block !important;
+  font-weight: 700 !important;
+  font-family: "Exo", sans-serif !important;
+  text-transform: uppercase !important;
+  border-radius: 5px !important;
+  transition: all .35s ease !important;
+}
+
+.btn-main {
+  background: #223a66 !important;
+  color: #fff !important;
+  border-color: #223a66 !important;
+}
+
+.btn-main:hover {
+  background: #e12454 !important;
+  border-color: #e12454 !important;
+  color: #fff !important;
+}
+
+.btn-main-2 {
+  background: #e12454 !important;
+  color: #fff !important;
+  border-color: #e12454 !important;
+}
+
+.btn-main-2:hover {
+  background: #223a66 !important;
+  color: #fff !important;
+  border-color: #223a66 !important;
+}
+
+/* Fix for form elements */
+.form-control {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  height: 45px !important;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+  border: 1px solid #223a66 !important;
+}
+
+/* Typography fixes */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Exo", sans-serif !important;
+  font-weight: 700 !important;
+  color: #222 !important;
+}
+
+/* Ensure section spacing is consistent */
+.section {
+  padding: 100px 0 !important;
+}
+
+.section-sm {
+  padding: 70px 0 !important;
+}
+
+/* Fix for slick carousel */
+.slick-slide:focus, 
+.slick-slide a {
+  outline: none !important;
+}
+
+/* Ensure color scheme is consistent */
+.title-color {
+  color: #223a66 !important;
+}
+
+.bg-primary {
+  background: #223a66 !important;
+}
+
+/* Ensure links are styled consistently */
+a {
+  color: #222 !important;
+  text-decoration: none !important;
+  transition: all .35s ease !important;
+}
+
+a:focus,
+a:hover {
+  color: #e12454 !important;
+  text-decoration: none !important;
+}

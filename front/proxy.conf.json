@@ -1,7 +1,32 @@
 {
-  "/api": {
+  "/api/equipment": {
     "target": "http://localhost:8090/equipment",
     "secure": false,
-    "changeOrigin": true
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/stats": {
+    "target": "http://localhost:8090/equipment",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/professionnels": {
+    "target": "http://localhost:8088/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/rendez-vous": {
+    "target": "http://localhost:8088/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/personnes-agees": {
+    "target": "http://localhost:8088/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

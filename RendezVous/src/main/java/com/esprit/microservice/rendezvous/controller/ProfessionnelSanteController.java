@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/professionnels")
+@RequestMapping("/api/professionnels")
 @RequiredArgsConstructor
 public class ProfessionnelSanteController {
     private final ProfessionnelSanteService professionnelSanteService;
