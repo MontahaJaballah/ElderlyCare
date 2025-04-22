@@ -1,4 +1,3 @@
-    FROM openjdk:17
-    EXPOSE 8089
-    ADD target/api-gateway-0.0.1-SNAPSHOT.jar gateway.jar
-    ENTRYPOINT ["java", "-jar", "gateway.jar"]
+FROM openjdk:17-jdk-alpine
+VOLUME /tmp COPY target/*.jar app.jar
+EXPOSE 8093 ENTRYPOINT ["java", "-jar", "/app.jar"]
