@@ -9,38 +9,60 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { KeycloakService } from '../services/keycloak.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router, private readonly keycloakService: KeycloakService) {}
 
-  // Check if URL is for equipment endpoints
-  private isEquipmentEndpoint(url: string): boolean {
-    return url.includes('/api/equipment') || url.includes('/api/stats/equipment');
+  // Check if URL is for equipment endpoints that require authentication
+  private isProtectedEquipmentEndpoint(url: string): boolean {
+    return url.includes('/api/equipment/weather-monitoring') || 
+           url.includes('/api/equipment/flag-old');
+  }
+  
+  // Check if URL requires authentication
+  private requiresAuthentication(url: string): boolean {
+    return this.isProtectedEquipmentEndpoint(url);
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Get the JWT token from localStorage
-    const token = localStorage.getItem('token');
+    // Get the JWT token from Keycloak service or fallback to localStorage
+    const token = this.keycloakService.getToken() || localStorage.getItem('token');
     
-    // If token exists, add it to the Authorization header
+    // Check if this is a protected endpoint that requires authentication
+    const isProtected = this.requiresAuthentication(request.url);
+    
+    // For protected endpoints, ensure we have a token
+    if (isProtected && !token) {
+      console.log('Protected endpoint requires authentication but no token available');
+      // Try to redirect to login page
+      try {
+        this.router.navigate(['/login']);
+      } catch (e) {
+        console.error('Failed to redirect to login page', e);
+      }
+      return throwError(() => new HttpErrorResponse({
+        error: 'Authentication required',
+        status: 401,
+        statusText: 'Unauthorized'
+      }));
+    }
+    
+    // Add token to request if available (for any endpoint)
     if (token) {
-      // Clone the request and add the Authorization header
       const authRequest = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
       
-      // Pass the cloned request with the token to the next handler
       return next.handle(authRequest).pipe(
         catchError((error: HttpErrorResponse) => {
-          // Handle authentication errors
-          if ((error.status === 401 || error.status === 403) && !this.isEquipmentEndpoint(request.url)) {
-            console.error('Authentication error:', error);
-            
-            // Clear token and redirect to login page
+          // Only handle 401/403 errors for protected endpoints
+          if ((error.status === 401 || error.status === 403) && isProtected) {
+            console.error('Authentication error for protected endpoint:', error);
             localStorage.removeItem('token');
             localStorage.removeItem('userType');
             this.router.navigate(['/login']);
@@ -50,7 +72,7 @@ export class AuthInterceptor implements HttpInterceptor {
       );
     }
     
-    // If no token, pass the original request
+    // If no token and not a protected endpoint, pass the original request
     return next.handle(request);
   }
 }

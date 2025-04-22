@@ -43,6 +43,7 @@ export class AuthService {
 
   // Register a professional healthcare provider
   registerProfessionnel(request: RegisterProfessionnelRequest): Observable<AuthResponse> {
+    // Use the updated route structure
     return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/professionnel`, request).pipe(
       tap(response => {
         if (response && response.token) {
@@ -63,6 +64,7 @@ export class AuthService {
 
   // Register an elderly person
   registerPersonneAgee(request: RegisterPersonneAgeeRequest): Observable<AuthResponse> {
+    // Use the updated route structure
     return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/personneagee`, request).pipe(
       tap(response => {
         if (response && response.token) {
@@ -89,6 +91,26 @@ export class AuthService {
       password: credentials.password,
       type: credentials.userType
     };
+    // Use Keycloak for authentication if available, otherwise fall back to the API
+    try {
+      // Try to use Keycloak first
+      const keycloakService = (window as any)['keycloakService'];
+      if (keycloakService && typeof keycloakService.login === 'function') {
+        console.log('Using Keycloak for authentication');
+        keycloakService.login();
+        // This is a workaround since we're redirecting to Keycloak
+        return new Observable<AuthResponse>(observer => {
+          // This code won't actually run due to the redirect
+          observer.next({ token: '', user: {} as User, type: credentials.userType });
+          observer.complete();
+        });
+      }
+    } catch (e) {
+      console.log('Keycloak not available, falling back to API login');
+    }
+    
+    // Fall back to API login
+    // Use the updated route structure
     return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, payload).pipe(
       tap(response => {
         if (response && response.token) {

@@ -19,10 +19,10 @@ const {
 const { verifyToken, isProfessionnel, isPersonneAgee, isResourceOwner } = require('./authMiddleware');
 
 // Authentication routes
-router.post('/auth/login', login);
-router.post('/auth/register/professionnel', registerProfessionnel);
-router.post('/auth/register/personneagee', registerPersonneAgee);
-router.post('/auth/logout', logout);
+router.post('/login', login);
+router.post('/register/professionnel', registerProfessionnel);
+router.post('/register/personneagee', registerPersonneAgee);
+router.post('/logout', logout);
 
 // Public routes
 router.get('/professionnels', getProfessionnels);
