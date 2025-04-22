@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Medication } from '../../models/medication.model';
 import { MedicationService } from '../../services/medication.service';
 
 @Component({
   selector: 'app-medication-form',
   templateUrl: './medication-form.component.html',
-  styleUrls: ['./medication-form.component.css']
+  styleUrls: ['./medication-form.component.css'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, DatePipe],
+  providers: [DatePipe]
 })
 export class MedicationFormComponent implements OnInit {
   medicationForm!: FormGroup;

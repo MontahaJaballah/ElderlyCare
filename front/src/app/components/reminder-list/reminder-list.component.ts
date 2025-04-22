@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Medication } from '../../models/medication.model';
 import { MedicationService } from '../../services/medication.service';
 
 @Component({
   selector: 'app-reminder-list',
   templateUrl: './reminder-list.component.html',
-  styleUrls: ['./reminder-list.component.css']
+  styleUrls: ['./reminder-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, DatePipe],
+  providers: [DatePipe]
 })
 export class ReminderListComponent implements OnInit {
   patientId = 1; // Hardcoded for now, should come from auth service

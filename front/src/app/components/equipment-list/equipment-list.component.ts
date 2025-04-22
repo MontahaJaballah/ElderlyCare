@@ -28,7 +28,10 @@ export class EquipmentListComponent implements OnInit {
         this.equipment = data;
       },
       error: (err) => {
-        this.error = 'Failed to load equipment: ' + err.message;
+        console.warn('Equipment loading error:', err);
+        this.error = 'Failed to load equipment. You may need to log in to access this data.';
+        // Don't block the UI - just show empty state
+        this.equipment = [];
       }
     });
   }
@@ -39,7 +42,9 @@ export class EquipmentListComponent implements OnInit {
         this.chartUrl = URL.createObjectURL(blob);
       },
       error: (err) => {
-        this.error = 'Failed to load chart: ' + err.message;
+        console.warn('Chart loading error:', err);
+        // Don't block the UI - just continue without the chart
+        this.chartUrl = '';
       }
     });
   }

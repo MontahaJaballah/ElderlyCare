@@ -39,7 +39,12 @@ export class EquipmentManagementComponent implements OnInit {
         this.equipment = data;
         this.success = 'Equipment loaded successfully';
       },
-      error: (err) => this.error = 'Failed to load equipment: ' + err.message
+      error: (err) => {
+        console.warn('Equipment loading error:', err);
+        this.error = 'Failed to load equipment. You may need to log in to access this data.';
+        // Don't block the UI - just show empty state
+        this.equipment = [];
+      }
     });
   }
 
@@ -120,7 +125,11 @@ export class EquipmentManagementComponent implements OnInit {
         };
         reader.readAsDataURL(data);
       },
-      error: (err) => console.error('Failed to load equipment stats:', err)
+      error: (err) => {
+        console.warn('Failed to load equipment stats:', err);
+        // Don't block the UI - just continue without stats
+        this.equipmentStats = null;
+      }
     });
   }
 

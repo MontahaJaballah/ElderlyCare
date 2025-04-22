@@ -24,8 +24,10 @@ public class SecurityConfig {
                 .csrf()
                     .disable()
                 .authorizeHttpRequests()
+                    .requestMatchers("/api/equipment/weather-monitoring", "/api/equipment/flag-old")
+                        .authenticated()
                     .anyRequest()
-                        .authenticated();
+                        .permitAll();
 
         http
                 .oauth2ResourceServer()

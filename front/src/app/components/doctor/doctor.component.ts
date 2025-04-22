@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { DoctorService } from '../../services/doctor.service';
 import { Doctor } from '../../models/doctor.model';
 
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
-  styleUrls: ['./doctor.component.css']
+  styleUrls: ['./doctor.component.css'],
+  standalone: true,
+  imports: [FormsModule, CommonModule]
 })
 export class DoctorComponent implements OnInit {
   doctors: Doctor[] = [];

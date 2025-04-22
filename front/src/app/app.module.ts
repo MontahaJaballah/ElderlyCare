@@ -30,6 +30,17 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
 
 @NgModule({
   declarations: [
+    // Non-standalone components must be declared here
+    ProfileComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    // Import standalone components
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -41,18 +52,9 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
     LoginComponent,
     SignupComponent,
     AuthTestComponent,
-    ProfileComponent,
     DoctorComponent,
     MedicationFormComponent,
     ReminderListComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule
   ],
   providers: [
     AuthService,
@@ -60,6 +62,6 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: []
 })
 export class AppModule { }

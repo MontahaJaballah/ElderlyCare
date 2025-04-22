@@ -71,6 +71,7 @@ public class EquipmentController {
     }
 
     // Equipment flagging endpoint
+    @PreAuthorize("hasRole('equip_admin')")
     @GetMapping("/flag-old")
     public List<Map<String, Object>> getFlaggedOldEquipment() {
         return equipmentService.getFlaggedOldEquipment();

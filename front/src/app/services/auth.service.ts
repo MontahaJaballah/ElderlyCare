@@ -83,7 +83,13 @@ export class AuthService {
 
   // Login user
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, credentials).pipe(
+    // Convert from userType to type to match backend expectations
+    const payload = {
+      email: credentials.email,
+      password: credentials.password,
+      type: credentials.userType
+    };
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, payload).pipe(
       tap(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);

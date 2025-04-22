@@ -15,6 +15,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private router: Router) {}
 
+  // Check if URL is for equipment endpoints
+  private isEquipmentEndpoint(url: string): boolean {
+    return url.includes('/api/equipment') || url.includes('/api/stats/equipment');
+  }
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // Get the JWT token from localStorage
     const token = localStorage.getItem('token');
@@ -32,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(authRequest).pipe(
         catchError((error: HttpErrorResponse) => {
           // Handle authentication errors
-          if (error.status === 401 || error.status === 403) {
+          if ((error.status === 401 || error.status === 403) && !this.isEquipmentEndpoint(request.url)) {
             console.error('Authentication error:', error);
             
             // Clear token and redirect to login page
