@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: tn.elderlycare.eurekaserver.EurekaServerApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.85 s -- in tn.elderlycare.eurekaserver.EurekaServerApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.40 s -- in tn.elderlycare.eurekaserver.EurekaServerApplicationTests

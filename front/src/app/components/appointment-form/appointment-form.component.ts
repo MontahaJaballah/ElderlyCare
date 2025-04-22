@@ -198,7 +198,8 @@ export class AppointmentFormComponent implements OnInit {
 
     this.appointmentService.ajouterRendezVous(
       formValues.idProfessionnel,
-      dateHeure
+      dateHeure,
+      this.patientId // Pass the patient ID
     ).subscribe({
       next: (response: RendezVous) => {
         this.isSubmitting = false;

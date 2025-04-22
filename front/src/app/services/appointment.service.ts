@@ -94,16 +94,25 @@ export class AppointmentService {
 
 
   // Create new appointment (for patients only)
-  ajouterRendezVous(idProfessionnel: number, dateHeure: string): Observable<RendezVous> {
+  ajouterRendezVous(idProfessionnel: number, dateHeure: string, idPersonneAgee?: number): Observable<RendezVous> {
     console.log('Creating appointment:', {
       idProfessionnel,
-      dateHeure
+      dateHeure,
+      idPersonneAgee
     });
 
-    // Note: We don't need to pass idPersonneAgee anymore as it's extracted from the JWT token
-    const params = new HttpParams()
+    // Initialize params with the required parameters
+    let params = new HttpParams()
       .set('idProfessionnel', idProfessionnel.toString())
       .set('dateHeure', dateHeure);
+    
+    // Add idPersonneAgee if provided, otherwise use the default patient ID
+    if (idPersonneAgee) {
+      params = params.set('idPersonneAgee', idPersonneAgee.toString());
+    } else {
+      // Using a default patient ID of 1 if not specified
+      params = params.set('idPersonneAgee', '1');
+    }
 
     return this.http.post<RendezVous>(`${this.baseUrl}/ajouter`, null, { params })
       .pipe(
