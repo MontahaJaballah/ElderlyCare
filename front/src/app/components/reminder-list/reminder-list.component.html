@@ -29,20 +29,42 @@
               <button type="button" class="btn-close" (click)="success = ''"></button>
             </div>
   
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
+            <div class="table-responsive mt-4">
+              <div *ngIf="reminders.length === 0" class="alert alert-info">
+                <i class="icofont-info-circle mr-2"></i>
+                No reminders found. Go to the Medications section to set reminders for your medications.
+              </div>
+
+              <table class="table table-hover table-striped" *ngIf="reminders.length > 0">
+                <thead class="table-primary">
                   <tr>
-                    <th>Name</th>
+                    <th>Medication Name</th>
                     <th>Reminder Time</th>
-                    <th>Taken</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let reminder of reminders">
                     <td>{{ reminder.name }}</td>
-                    <td>{{ reminder.reminderTime || 'Not set' }}</td>
-                    <td>{{ reminder.taken ? 'Yes' : 'No' }}</td>
+                    <td>
+                      <i class="icofont-alarm text-primary"></i>
+                      {{ reminder.reminderTime | date:'medium' }}
+                    </td>
+                    <td>{{ reminder.dosage }}</td>
+                    <td>{{ reminder.frequency }}</td>
+                    <td>
+                      <span class="badge" [class.badge-success]="!reminder.taken" [class.badge-secondary]="reminder.taken">
+                        {{ reminder.taken ? 'Taken' : 'Pending' }}
+                      </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-danger" (click)="clearReminder(reminder.id)">
+                        <i class="icofont-ui-delete"></i> Clear
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -110,51 +110,89 @@
   
             <h2 class="mb-2 title-color mt-5">Your Medications</h2>
             <div class="table-responsive mt-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="mb-0">Current Medications</h3>
-                <div class="btn-group">
-                  <button class="btn btn-outline-primary" (click)="viewMode = 'table'"
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <h3 class="mb-2">Current Medications</h3>
+                  <p class="text-muted mb-0"><i class="icofont-medicine text-primary"></i> Total: {{ medications.length }} medications</p>
+                </div>
+                <div class="btn-group shadow-sm">
+                  <button class="btn btn-light px-4" (click)="viewMode = 'table'"
                     [class.active]="viewMode === 'table'">
-                    <i class="icofont-listing-box"></i> Table View
+                    <i class="icofont-listing-box"></i> Table
                   </button>
-                  <button class="btn btn-outline-primary" (click)="viewMode = 'grid'"
+                  <button class="btn btn-light px-4" (click)="viewMode = 'grid'"
                     [class.active]="viewMode === 'grid'">
-                    <i class="icofont-grid"></i> Grid View
+                    <i class="icofont-grid"></i> Grid
                   </button>
                 </div>
               </div>
 
-              <table class="table table-hover table-striped" *ngIf="viewMode === 'table'">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Dosage</th>
-                    <th>Frequency</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Reminder Time</th>
-                    <th>Taken</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let medication of medications">
-                    <td>{{ medication.name }}</td>
-                    <td>{{ medication.dosage }}</td>
-                    <td>{{ medication.frequency }}</td>
-                    <td>{{ medication.startDate }}</td>
-                    <td>{{ medication.endDate || 'N/A' }}</td>
-                    <td>{{ medication.reminderTime || 'Not set' }}</td>
-                    <td>{{ medication.taken ? 'Yes' : 'No' }}</td>
-                    <td>
-                      <button class="btn btn-sm btn-warning" (click)="editMedication(medication)">Edit</button>
-                      <button class="btn btn-sm btn-primary ml-2" (click)="setReminderForMedication(medication.id)">Set Reminder</button>
-                      <button class="btn btn-sm btn-info ml-2" (click)="showQrCode(medication.id)">Show QR</button>
-                      <button class="btn btn-sm btn-danger ml-2" (click)="deleteMedication(medication.id)">Delete</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div *ngIf="medications.length === 0" class="alert alert-info">
+                <i class="icofont-info-circle mr-2"></i>
+                No medications found. Use the form above to add your first medication.
+              </div>
+
+              <div class="card shadow-sm" *ngIf="medications.length > 0 && viewMode === 'table'">
+                <div class="card-body p-0">
+                  <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                      <tr>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Name</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Dosage</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Frequency</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Start Date</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">End Date</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Status</th>
+                        <th class="border-0 font-weight-bold text-muted text-uppercase">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let medication of medications">
+                        <td class="align-middle">
+                          <div class="d-flex align-items-center">
+                            <i class="icofont-pills text-primary mr-2"></i>
+                            <strong>{{ medication.name }}</strong>
+                          </div>
+                        </td>
+                        <td class="align-middle">{{ medication.dosage }}</td>
+                        <td class="align-middle">{{ medication.frequency }}</td>
+                        <td class="align-middle">
+                          <i class="icofont-calendar text-success mr-1"></i>
+                          {{ medication.startDate | date:'mediumDate' }}
+                        </td>
+                        <td class="align-middle">
+                          <span *ngIf="medication.endDate">
+                            <i class="icofont-calendar text-danger mr-1"></i>
+                            {{ medication.endDate | date:'mediumDate' }}
+                          </span>
+                          <span *ngIf="!medication.endDate" class="text-muted">—</span>
+                        </td>
+                        <td class="align-middle">
+                          <span class="badge" [class.badge-success]="!medication.taken" [class.badge-secondary]="medication.taken">
+                            {{ medication.taken ? 'Taken' : 'Pending' }}
+                          </span>
+                        </td>
+                        <td class="align-middle">
+                          <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-warning" (click)="editMedication(medication)" title="Edit">
+                              <i class="icofont-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" (click)="setReminderForMedication(medication.id)" title="Set Reminder">
+                              <i class="icofont-alarm"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" (click)="showQrCode(medication.id)" title="Show QR Code">
+                              <i class="icofont-qr-code"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" (click)="deleteMedication(medication.id)" title="Delete">
+                              <i class="icofont-trash"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
   
             <div *ngIf="selectedMedicationForEdit" class="mt-4">
