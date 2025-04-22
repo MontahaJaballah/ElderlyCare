@@ -17,9 +17,8 @@ const routes: Routes = [
   { path: 'appointment', component: AppointmentFormComponent },
   { path: 'medication', component: MedicationFormComponent },
   { path: 'reminders', component: ReminderListComponent },
-  { path: '**', component: HomeComponent }
   { path: 'doctors', component: DoctorComponent },
-  { path: "**", component: HomeComponent }
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

@@ -17,7 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="GestionMedecin" options="-parameters" />
-      <module name="MedicalEquipment" options="" />
+      <module name="MedicalEquipment" options="-parameters" />
       <module name="api-gateway" options="" />
       <module name="eureka-server" options="" />
     </option>

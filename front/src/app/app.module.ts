@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
+import { MedicationFormComponent } from './components/medication-form/medication-form.component';
+import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +27,17 @@ import { DoctorComponent } from './components/doctor/doctor.component';
     HomeComponent,
     FooterComponent,
     AppointmentFormComponent,
-    DoctorComponent
+    DoctorComponent,
+    MedicationFormComponent,
+    ReminderListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
