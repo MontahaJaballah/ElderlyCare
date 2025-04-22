@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -27,11 +27,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { MedicationFormComponent } from './components/medication-form/medication-form.component';
 import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
+import { NurseComponent } from './components/nurse/nurse.component';
 
 @NgModule({
   declarations: [
     // Non-standalone components must be declared here
-    ProfileComponent
+    ProfileComponent,
+    NurseComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
     AuthTestComponent,
     DoctorComponent,
     MedicationFormComponent,
-    ReminderListComponent
+    ReminderListComponent,
+    AppComponent
   ],
   providers: [
     AuthService,

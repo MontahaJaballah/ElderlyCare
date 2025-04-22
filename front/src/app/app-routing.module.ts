@@ -13,6 +13,7 @@ import { MedicationFormComponent } from './components/medication-form/medication
 import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
 
 import { DoctorComponent } from './components/doctor/doctor.component';
+import { NurseComponent } from './components/nurse/nurse.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'medication', component: MedicationFormComponent },
   { path: 'reminders', component: ReminderListComponent },
   { path: 'doctors', component: DoctorComponent },
+  { path: 'nurses', component: NurseComponent },
   { path: '**', component: HomeComponent }
 ];
 
