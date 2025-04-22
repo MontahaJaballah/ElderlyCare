@@ -58,6 +58,13 @@ export class MedicationService {
     );
   }
 
+  clearReminder(medicationId: number): Observable<Medication> {
+    return this.http.delete<Medication>(`${this.baseUrl}/reminder/${medicationId}`).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+
   getRemindersByPatient(patientId: number): Observable<Medication[]> {
     return this.http.get<Medication[]>(`${this.baseUrl}/reminders/patient/${patientId}`).pipe(
       retry(1),

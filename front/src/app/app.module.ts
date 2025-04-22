@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { MedicationFormComponent } from './components/medication-form/medication-form.component';
+import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,10 +25,12 @@ import { MedicationFormComponent } from './components/medication-form/medication
     HomeComponent,
     FooterComponent,
     AppointmentFormComponent,
-    MedicationFormComponent
+    MedicationFormComponent,
+    ReminderListComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

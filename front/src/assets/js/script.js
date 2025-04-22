@@ -152,23 +152,24 @@
 
 
 
-	var map;
+	// Only initialize Google Maps if the element exists and the API is loaded
+	if (document.getElementById('map-canvas') && window.google && window.google.maps) {
+		var map;
 
-	function initialize() {
-		var mapOptions = {
-			zoom: 13,
-			center: new google.maps.LatLng(50.97797382271958, -114.107718560791)
-			// styles: style_array_here
-		};
-		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	}
-	
-	// Make initialize function available globally for Google Maps API
-	window.initMap = initialize;
+		function initialize() {
+			var mapOptions = {
+				zoom: 13,
+				center: new google.maps.LatLng(50.97797382271958, -114.107718560791)
+				// styles: style_array_here
+			};
+			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		}
+		
+		// Make initialize function available globally for Google Maps API
+		window.initMap = initialize;
 
-	var google_map_canvas = $('#map-canvas');
-
-	if (google_map_canvas.length) {
+		// Initialize map if the element exists
+		if ($('#map-canvas').length) {
 		google.maps.event.addDomListener(window, 'load', initialize);
 	}
 
@@ -181,13 +182,13 @@
 
 		
  // Shuffle js filter and masonry
-    var Shuffle = window.Shuffle;
-    var jQuery = window.jQuery;
-
-    var myShuffle = new Shuffle(document.querySelector('.shuffle-wrapper'), {
-        itemSelector: '.shuffle-item',
-        buffer: 1
-    });
+    if (window.Shuffle && document.querySelector('.shuffle-wrapper')) {
+        var Shuffle = window.Shuffle;
+        var myShuffle = new Shuffle(document.querySelector('.shuffle-wrapper'), {
+            itemSelector: '.shuffle-item',
+            buffer: 1
+        });
+    }
 
     jQuery('input[name="shuffle-filter"]').on('change', function (evt) {
         var input = evt.currentTarget;
