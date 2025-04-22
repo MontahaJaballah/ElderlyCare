@@ -161,12 +161,16 @@ export class MedicationFormComponent implements OnInit {
 
   editMedication(medication: Medication): void {
     this.selectedMedicationForEdit = medication;
+    // Format dates for the form
+    const startDate = medication.startDate ? medication.startDate.split('T')[0] : null;
+    const endDate = medication.endDate ? medication.endDate.split('T')[0] : null;
+
     this.updateForm.patchValue({
       name: medication.name,
       dosage: medication.dosage,
       frequency: medication.frequency,
-      startDate: medication.startDate,
-      endDate: medication.endDate,
+      startDate: startDate,
+      endDate: endDate,
       notes: medication.notes
     });
   }
@@ -180,7 +184,20 @@ export class MedicationFormComponent implements OnInit {
     this.error = '';
     this.success = '';
 
-    const updatedValues = this.updateForm.value;
+    const formValues = this.updateForm.value;
+    
+    // Format the data for the API
+    const updatedValues = {
+      name: formValues.name,
+      dosage: formValues.dosage,
+      frequency: formValues.frequency,
+      startDate: formValues.startDate ? new Date(formValues.startDate).toISOString().split('T')[0] : null,
+      endDate: formValues.endDate ? new Date(formValues.endDate).toISOString().split('T')[0] : null,
+      notes: formValues.notes || '',
+      patientId: this.selectedMedicationForEdit.patientId,
+      taken: this.selectedMedicationForEdit.taken
+    };
+
     this.medicationService.updateMedication(this.selectedMedicationForEdit.id!, updatedValues).subscribe({
       next: () => {
         this.isSubmitting = false;
