@@ -7,19 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
-        <module name="MedicalEquipment" />
-        <module name="eureka-server" />
-        <module name="GestionMedecin" />
+        <module name="nurse" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="GestionMedecin" options="-parameters" />
-      <module name="MedicalEquipment" options="-parameters" />
-      <module name="api-gateway" options="-parameters" />
-      <module name="eureka-server" options="" />
+      <module name="nurse" options="-parameters" />
     </option>
   </component>
 </project>
