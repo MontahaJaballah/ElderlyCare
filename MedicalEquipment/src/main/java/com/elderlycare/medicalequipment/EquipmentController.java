@@ -3,6 +3,7 @@ package com.elderlycare.medicalequipment;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,7 @@ public class EquipmentController {
     }
 
     // Weather monitoring endpoint
+    @PreAuthorize("hasRole('equip_admin')")
     @GetMapping("/weather-monitoring")
     public WeatherResponse monitorWeather(@RequestParam String city) {
         return weatherService.getWeatherRisk(city);

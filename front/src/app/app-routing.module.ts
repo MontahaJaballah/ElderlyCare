@@ -4,6 +4,9 @@ import { EquipmentListComponent } from './components/equipment-list/equipment-li
 import { EquipmentManagementComponent } from './components/equipment-management/equipment-management.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
+import { MedicationFormComponent } from './components/medication-form/medication-form.component';
+import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
+
 import { DoctorComponent } from './components/doctor/doctor.component';
 
 const routes: Routes = [
@@ -12,6 +15,9 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentManagementComponent },
   { path: 'equipment-list', component: EquipmentListComponent },
   { path: 'appointment', component: AppointmentFormComponent },
+  { path: 'medication', component: MedicationFormComponent },
+  { path: 'reminders', component: ReminderListComponent },
+  { path: '**', component: HomeComponent }
   { path: 'doctors', component: DoctorComponent },
   { path: "**", component: HomeComponent }
 ];

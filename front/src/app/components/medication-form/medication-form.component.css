@@ -1,0 +1,18 @@
+/* Styles to match the appointment form and homepage design */
+.appoinment-form .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-main {
+    background-color: #ff4d4d; /* Red color from homepage button */
+    color: white;
+    border-radius: 25px;
+  }
+  
+  .btn-main:hover {
+    background-color: #e60000;
+  }
+  
+  .text-color {
+    color: #ff4d4d; /* Match the red accent from the homepage */
+  }
