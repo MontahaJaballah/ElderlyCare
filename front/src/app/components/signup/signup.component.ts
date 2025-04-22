@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
       adresse: [''],
 
       // Fields specific to ProfessionnelSante
-      specialite: [Specialite.CARDIOLOGY]
+      specialite: [Specialite.CARDIOLOGIE]
     }, {
       validators: this.passwordMatchValidator
     });

@@ -43,6 +43,7 @@ export class AuthService {
 
   // Register a professional healthcare provider
   registerProfessionnel(request: RegisterProfessionnelRequest): Observable<AuthResponse> {
+    console.log('Registering health professional:', request);
     // Use the updated route structure
     return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/professionnel`, request).pipe(
       tap(response => {
@@ -64,6 +65,7 @@ export class AuthService {
 
   // Register an elderly person
   registerPersonneAgee(request: RegisterPersonneAgeeRequest): Observable<AuthResponse> {
+    console.log('Registering elderly person:', request);
     // Use the updated route structure
     return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/personneagee`, request).pipe(
       tap(response => {

@@ -58,29 +58,45 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     
-    // Try to use Keycloak first
-    if (this.keycloakService.isInitialized()) {
-      console.log('Using Keycloak for authentication');
-      this.keycloakService.login()
-        .then(() => {
-          // Success will redirect to Keycloak
-        })
-        .catch(err => {
-          console.error('Keycloak login failed, falling back to API', err);
-          this.loginWithAPI();
-        });
+    // Get the selected user type
+    const userType = this.f['userType'].value;
+    
+    // Health professionals use Keycloak, elderly persons use traditional API
+    if (userType === this.userTypes.PROFESSIONNEL_SANTE) {
+      console.log('Health professional login - using Keycloak if available');
+      
+      // Try to use Keycloak for health professionals
+      if (this.keycloakService.isInitialized()) {
+        this.keycloakService.login()
+          .then(() => {
+            // Success will redirect to Keycloak
+            console.log('Redirecting to Keycloak login');
+          })
+          .catch(err => {
+            console.error('Keycloak login failed, falling back to API', err);
+            this.loginWithAPI();
+          });
+      } else {
+        // Fall back to API login if Keycloak is not initialized
+        console.log('Keycloak not initialized, using API login');
+        this.loginWithAPI();
+      }
     } else {
-      // Fall back to API login
+      // Elderly persons always use traditional API
+      console.log('Elderly person login - using traditional API');
       this.loginWithAPI();
     }
   }
   
-  // Fallback method for API login
+  // Method for traditional API login
   private loginWithAPI() {
+    const userType = this.f['userType'].value;
+    console.log(`Logging in with API as ${userType}`);
+    
     this.authService.login({
       email: this.f['email'].value,
       password: this.f['password'].value,
-      userType: this.f['userType'].value
+      userType: userType
     })
       .subscribe({
         next: () => {

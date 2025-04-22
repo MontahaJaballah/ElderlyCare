@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 declare const Keycloak: any;
 
@@ -14,7 +14,7 @@ export class KeycloakService {
   private refreshToken: string | null = null;
   private roles: string[] = [];
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor() {}
@@ -85,7 +85,24 @@ export class KeycloakService {
   }
 
   login(): Promise<void> {
+    if (!this.keycloakAuth) {
+      return Promise.reject(new Error('Keycloak not initialized'));
+    }
+    
     return this.keycloakAuth.login();
+  }
+  
+  /**
+   * Update/refresh the token if it's expired
+   * @param minValidity Minimum validity time in seconds (default 30)
+   * @returns Promise that resolves when the token is refreshed
+   */
+  updateToken(minValidity = 30): Promise<boolean> {
+    if (!this.keycloakAuth) {
+      return Promise.reject(new Error('Keycloak not initialized'));
+    }
+    
+    return this.keycloakAuth.updateToken(minValidity);
   }
 
   logout(): Promise<void> {
@@ -106,7 +123,7 @@ export class KeycloakService {
   }
 
   getToken(): string | null {
-    return this.token;
+    return this.token ?? localStorage.getItem('token');
   }
 
   isLoggedIn(): boolean {
