@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,9 +23,11 @@ public class Disponibilite implements Serializable {
     @Column(name = "idDisponibilite")
     private long idDisponibilite;
 
+    @ElementCollection(targetClass = JourSemaine.class)
     @Enumerated(EnumType.STRING)
-    @Column(name = "jourSemaine")
-    private JourSemaine jourSemaine;
+    @CollectionTable(name = "disponibilite_jours", joinColumns = @JoinColumn(name = "disponibilite_id"))
+    @Column(name = "jour")
+    private List<JourSemaine> jourSemaine;
 
     @Column(name = "heureDebut")
     private LocalTime heureDebut;

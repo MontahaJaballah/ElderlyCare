@@ -1,0 +1,110 @@
+/* General styles */
+.container {
+  background-color: #F0F8FF;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+}
+
+/* Date tabs styles */
+.nav-pills .nav-link {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+  margin-bottom: 10px;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #223a66;
+  color: white;
+}
+
+/* Appointment list styles */
+.width-13x {
+  width: 130px;
+}
+
+.appointment-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.appointment-item:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Status colors */
+.border-success {
+  border-color: #28a745 !important;
+}
+
+.border-primary {
+  border-color: #007bff !important;
+}
+
+.border-danger {
+  border-color: #dc3545 !important;
+}
+
+/* Modal styles */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.modal-header {
+  border-bottom: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-footer {
+  border-top: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Pagination styles */
+.pagination {
+  margin-bottom: 0;
+}
+
+.page-link {
+  color: #223a66;
+  border-color: #e9ecef;
+}
+
+.page-link:hover {
+  color: #223a66;
+  background-color: #e9ecef;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .width-13x {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .appointment-item {
+    padding: 15px;
+  }
+}

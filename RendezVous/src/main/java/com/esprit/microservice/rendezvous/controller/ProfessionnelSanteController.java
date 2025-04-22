@@ -23,6 +23,11 @@ public class ProfessionnelSanteController {
         return professionnelSanteService.getAllProfessionnels();
     }
 
+    @GetMapping("/bySpecialite/{specialites}")
+    public List<ProfessionnelSante> getAllProfessionnelsBySpecialite(@PathVariable String specialites) {
+        return professionnelSanteService.getProfessionnelsBySpecialite(specialites);
+    }
+
     @DeleteMapping("/supprimer/{id}")
     public void supprimerProfessionnel(@PathVariable Long id) {
         professionnelSanteService.supprimerProfessionnel(id);

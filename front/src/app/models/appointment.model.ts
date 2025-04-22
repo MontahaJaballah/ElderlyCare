@@ -1,27 +1,13 @@
+import { PersonneAgee, ProfessionnelSante } from './user.model';
+
+// Re-export these types so they can be imported from either module
+export { PersonneAgee, ProfessionnelSante };
+
 export enum StatutRendezVous {
-  PLANIFIE = 'PLANIFIE',
-  CONFIRME = 'CONFIRME',
-  ANNULE = 'ANNULE',
-  TERMINE = 'TERMINE'
-}
-
-export interface PersonneAgee {
-  idPersonneAgee: number;
-  prenom: string;
-  nom: string;
-  dateNaissance?: string;
-  adresse?: string;
-  telephone: string;
-  email?: string;
-}
-
-export interface ProfessionnelSante {
-  idProfessionnelSante: number;
-  prenom: string;
-  nom: string;
-  specialite?: string;
-  telephone: string;
-  email?: string;
+  PLANIFIE = 'PENDING',
+  CONFIRME = 'CONFIRMED',
+  ANNULE = 'CANCELED',
+  TERMINE = 'COMPLETED'
 }
 
 export interface RendezVous {

@@ -1,26 +1,45 @@
 const express = require('express');
 const router = express.Router();
 const { 
-  getUsers, 
-  getUserById, 
-  createUser, 
-  updateUser, 
-  deleteUser,
-  signup,
+  getProfessionnels,
+  getPersonnesAgees,
+  getProfessionnelById,
+  getPersonneAgeeById,
+  updateProfessionnel,
+  updatePersonneAgee,
+  deleteProfessionnel,
+  deletePersonneAgee,
+  registerProfessionnel,
+  registerPersonneAgee,
   login,
-  logout
+  logout,
+  addAvailability,
+  getAvailability
 } = require('./userController');
+const { verifyToken, isProfessionnel, isPersonneAgee, isResourceOwner } = require('./authMiddleware');
 
-// Authentication routes
-router.post('/signup', signup);     // POST /api/users/signup
-router.post('/login', login);       // POST /api/users/login
-router.post('/logout', logout);     // POST /api/users/logout
+// Public authentication routes
+router.post('/auth/login', login);                                // POST /api/auth/login
+router.post('/auth/register/professionnel', registerProfessionnel); // POST /api/auth/register/professionnel
+router.post('/auth/register/personneagee', registerPersonneAgee);   // POST /api/auth/register/personneagee
+router.post('/auth/logout', logout);                              // POST /api/auth/logout
 
-// CRUD operations
-router.get('/all', getUsers);                    // GET all users
-router.get('/find/:id', getUserById);            // GET user by ID
-router.post('/create', createUser);              // CREATE new user
-router.put('/update/:id', updateUser);           // UPDATE user
-router.delete('/delete/:id', deleteUser);        // DELETE user
+// Public routes - Get all professionals (for appointment booking)
+router.get('/professionnels', getProfessionnels);                    // GET all professionals
+
+// Protected professional routes
+router.get('/professionnels/:id', verifyToken, getProfessionnelById);             // GET professional by ID
+router.put('/professionnels/:id', verifyToken, isResourceOwner, updateProfessionnel);  // UPDATE professional
+router.delete('/professionnels/:id', verifyToken, isResourceOwner, deleteProfessionnel); // DELETE professional
+
+// Protected availability routes (only professionals can manage their availability)
+router.get('/professionnels/:id/disponibilites', verifyToken, getAvailability);   // GET professional's availability
+router.post('/professionnels/:id/disponibilites', verifyToken, isProfessionnel, isResourceOwner, addAvailability);  // ADD availability slot
+
+// Protected elderly person routes
+router.get('/personnesagees', verifyToken, isProfessionnel, getPersonnesAgees);   // Only professionals can see all elderly persons
+router.get('/personnesagees/:id', verifyToken, getPersonneAgeeById);              // GET elderly person by ID
+router.put('/personnesagees/:id', verifyToken, isResourceOwner, updatePersonneAgee);  // UPDATE elderly person
+router.delete('/personnesagees/:id', verifyToken, isResourceOwner, deletePersonneAgee); // DELETE elderly person
 
 module.exports = router;

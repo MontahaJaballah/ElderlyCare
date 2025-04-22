@@ -42,6 +42,6 @@ public class ProfessionnelSante implements Serializable {
     @JsonIgnore
     private Set<RendezVous> rendezVous;
 
-    @OneToMany(mappedBy = "professionnelSante", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "professionnelSante", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Disponibilite> disponibilites;
 }

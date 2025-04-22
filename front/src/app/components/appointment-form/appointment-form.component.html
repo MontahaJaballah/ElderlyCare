@@ -74,7 +74,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input type="date" class="form-control" formControlName="date">
+                                    <input type="date" class="form-control" formControlName="date" [min]="minDate">
                                     <div *ngIf="appointmentForm.get('date')?.invalid && appointmentForm.get('date')?.touched"
                                         class="text-danger">
                                         Date is required

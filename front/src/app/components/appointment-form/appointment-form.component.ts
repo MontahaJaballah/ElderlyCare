@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { RendezVous, ProfessionnelSante } from '../../models/appointment.model';
 import { AppointmentService } from '../../services/appointment.service';
 
 @Component({
   selector: 'app-appointment-form',
   templateUrl: './appointment-form.component.html',
-  styleUrls: ['./appointment-form.component.css']
+  styleUrls: ['./appointment-form.component.css'],
+  imports: [CommonModule, ReactiveFormsModule],
+  standalone: true
 })
 export class AppointmentFormComponent implements OnInit {
   appointmentForm!: FormGroup;
@@ -18,6 +21,7 @@ export class AppointmentFormComponent implements OnInit {
   error = '';
   success = '';
   filteredProfessionnels: ProfessionnelSante[] = [];
+  minDate: string;
 
   // Hardcoded patient ID - in a real app, this would come from authentication
   private readonly patientId = 1; // Replace with actual patient ID or get from auth service
@@ -26,16 +30,27 @@ export class AppointmentFormComponent implements OnInit {
     private readonly appointmentService: AppointmentService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
-  ) {}
+  ) {
+    // Set minimum date to today
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
     this.initForm();
     this.loadSpecialites();
-    this.loadProfessionnels();
+    // Initialize with empty professionals list
+    this.filteredProfessionnels = [];
 
     // Listen for specialty changes to filter professionals
     this.appointmentForm.get('specialite')?.valueChanges.subscribe((specialite: string) => {
-      this.filterProfessionnelsBySpecialite(specialite);
+      if (specialite) {
+        this.filterProfessionnelsBySpecialite(specialite);
+      } else {
+        // Clear professionals list when no specialty is selected
+        this.filteredProfessionnels = [];
+        this.appointmentForm.get('idProfessionnel')?.setValue('');
+      }
     });
 
     // Listen for date and professional changes to load available time slots
@@ -69,25 +84,35 @@ export class AppointmentFormComponent implements OnInit {
     });
   }
 
+  // We don't need to load all professionals at once anymore
+  // as we're loading them by specialty
   loadProfessionnels(): void {
-    this.appointmentService.getAllProfessionnels().subscribe({
-      next: (data: ProfessionnelSante[]) => {
-        this.professionnels = data;
-        this.filteredProfessionnels = [...this.professionnels];
-      },
-      error: (err: any) => {
-        this.error = 'Échec du chargement des professionnels: ' + err.message;
-      }
-    });
+    // This method is no longer used
   }
 
   filterProfessionnelsBySpecialite(specialite: string): void {
     if (!specialite) {
-      this.filteredProfessionnels = [...this.professionnels];
+      // If no specialty is selected, clear the professionals list
+      this.filteredProfessionnels = [];
+      this.appointmentForm.get('idProfessionnel')?.setValue('');
       return;
     }
-    
-    this.filteredProfessionnels = this.professionnels.filter(prof => prof.specialite === specialite);
+
+    // Clear professionals selection when specialty changes
+    this.appointmentForm.get('idProfessionnel')?.setValue('');
+
+    // Load professionals by specialty from the API
+    this.appointmentService.getProfessionnelsBySpecialite(specialite).subscribe({
+      next: (data: ProfessionnelSante[]) => {
+        console.log(`Loaded ${data.length} professionals for specialty: ${specialite}`);
+        this.filteredProfessionnels = data;
+      },
+      error: (err: any) => {
+        console.error('Failed to load professionals by specialty:', err);
+        this.error = 'Échec du chargement des professionnels: ' + err.message;
+        this.filteredProfessionnels = [];
+      }
+    });
   }
 
   loadDisponibilites(): void {
@@ -95,19 +120,36 @@ export class AppointmentFormComponent implements OnInit {
     const date = this.appointmentForm.get('date')?.value;
     
     if (!idProfessionnel || !date) {
-      // Clear time slots if either professional or date is not selected
       this.availableTimeSlots = [];
-      this.appointmentForm.get('heure')?.setValue('');
       return;
     }
-    
-    console.log('Loading time slots for professional:', idProfessionnel, 'on date:', date);
-    
-    this.appointmentService.getDisponibilites(idProfessionnel, date).subscribe({
-      next: (data: string[]) => {
-        console.log('Received time slots:', data);
-        this.availableTimeSlots = data;
+
+    this.appointmentService.getRendezVousParProfessionnel(idProfessionnel).subscribe({
+      next: (appointments: RendezVous[]) => {
+        console.log('Received appointments:', appointments);
         
+        // Generate all possible time slots
+        const allTimeSlots = this.appointmentService.generateAllTimeSlots();
+        
+        // Filter out time slots that are already booked
+        const availableTimeSlots = allTimeSlots.filter(timeSlot => {
+          return !appointments.some((appointment: RendezVous) => {
+            const appointmentTime = new Date(appointment.dateHeure).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            return appointmentTime === timeSlot;
+          });
+        });
+
+        this.availableTimeSlots = availableTimeSlots;
+        
+        // If there are no appointments, show all time slots
+        if (appointments.length === 0) {
+          this.error = 'Aucun rendez-vous trouvé pour ce professionnel. Tous les créneaux sont disponibles.';
+        } else if (availableTimeSlots.length === 0) {
+          this.error = 'Tous les créneaux sont déjà réservés pour ce professionnel.';
+        } else {
+          this.error = '';
+        }
+
         // Reset time selection if previously selected time is no longer available
         const currentTime = this.appointmentForm.get('heure')?.value;
         if (currentTime && !this.availableTimeSlots.includes(currentTime)) {
@@ -120,9 +162,9 @@ export class AppointmentFormComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.error('Failed to load time slots:', err);
-        this.error = 'Échec du chargement des disponibilités: ' + err.message;
-        this.availableTimeSlots = [];
+        console.error('Failed to load appointments:', err);
+        this.error = 'Échec du chargement des disponibilités. Veuillez réessayer.';
+        this.availableTimeSlots = this.appointmentService.generateAllTimeSlots();
       }
     });
   }
@@ -141,21 +183,20 @@ export class AppointmentFormComponent implements OnInit {
     this.success = '';
 
     const formValues = this.appointmentForm.value;
-    
+
     // Combine date and time into ISO format string (YYYY-MM-DDTHH:MM:SS)
     const dateHeure = this.formatDateTime(formValues.date, formValues.heure);
-    
+
     // Validate the combined date-time
     if (!dateHeure) {
       this.error = 'Invalid date or time format';
       this.isSubmitting = false;
       return;
     }
-    
+
     console.log('Submitting appointment with date-time:', dateHeure);
 
     this.appointmentService.ajouterRendezVous(
-      this.patientId,
       formValues.idProfessionnel,
       dateHeure
     ).subscribe({
@@ -163,7 +204,8 @@ export class AppointmentFormComponent implements OnInit {
         this.isSubmitting = false;
         this.success = 'Rendez-vous réservé avec succès!';
         this.appointmentForm.reset();
-        
+        console.log('Appointment added:', response);
+
         // Navigate to confirmation page or show confirmation message
         setTimeout(() => {
           this.router.navigate(['/confirmation'], { state: { rendezvous: response } });
@@ -171,7 +213,20 @@ export class AppointmentFormComponent implements OnInit {
       },
       error: (err: any) => {
         this.isSubmitting = false;
-        this.error = 'Échec de la réservation: ' + (err.error?.message || err.message || 'Erreur inconnue');
+        console.error('Appointment creation error:', err);
+        
+        // Show a more user-friendly error message
+        let errorMessage = '';
+        if (err.status === 500) {
+          errorMessage = 'Le serveur a rencontré une erreur. Veuillez réessayer plus tard.';
+        } else if (err.status === 404) {
+          errorMessage = 'Le professionnel sélectionné n\'a pas été trouvé.';
+        } else {
+          errorMessage = err.message || 'Erreur lors de la réservation. Veuillez réessayer.';
+        }
+        
+        alert(errorMessage);
+        this.error = errorMessage;
       }
     });
   }
@@ -186,10 +241,10 @@ export class AppointmentFormComponent implements OnInit {
 
     // Format: yyyy-MM-ddTHH:mm:ss
     // Make sure time has seconds
-    const formattedTime = time.includes(':') && time.split(':').length === 2 
-      ? `${time}:00` 
+    const formattedTime = time.includes(':') && time.split(':').length === 2
+      ? `${time}:00`
       : time;
-      
+
     return `${date}T${formattedTime}`;
   }
 }

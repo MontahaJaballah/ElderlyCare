@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
+// Use plain URLs without special characters that might confuse path-to-regexp
 const EUREKA_SERVER = 'http://localhost:8761/eureka';
 const APP_NAME = 'USER-SERVICE';
 const INSTANCE_ID = uuidv4();
@@ -25,24 +26,32 @@ const registerWithEureka = async () => {
   };
 
   try {
+    // Disable Eureka registration for now to fix path-to-regexp error
+    console.log('Eureka registration disabled to fix path-to-regexp error');
+    /* 
     await axios.post(`${EUREKA_SERVER}/apps/${APP_NAME}`, instance, {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    console.log(`✅ Registered with Eureka as ${APP_NAME}`);
+    */
+    console.log(`✅ Eureka registration skipped to avoid path-to-regexp error`);
   } catch (err) {
-    console.error('❌ Error registering with Eureka:', err.message);
+    console.error(`❌ Error registering with Eureka: ${err.message}`);
   }
 };
 
 const sendHeartbeat = async () => {
+  // Disable heartbeat to avoid path-to-regexp errors
+  console.log(`💓 Eureka heartbeat skipped to avoid path-to-regexp error`);
+  /* 
   try {
     await axios.put(`${EUREKA_SERVER}/apps/${APP_NAME}/${INSTANCE_ID}`);
     console.log(`💓 Sent heartbeat to Eureka`);
   } catch (err) {
     console.error('❌ Heartbeat failed:', err.message);
   }
+  */
 };
 
 module.exports = { registerWithEureka, sendHeartbeat };

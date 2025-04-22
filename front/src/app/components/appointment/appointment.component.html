@@ -1,0 +1,165 @@
+<div class="container py-5 position-relative z-index-1">
+  <!-- Title Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="text-primary">{{ isDoctor ? 'My Patient Appointments' : 'My Scheduled Appointments' }}</h2>
+      <p class="text-muted">{{ isDoctor ? 'View and manage your patient appointments' : 'View your upcoming appointments with healthcare professionals' }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Date Selection Tabs -->
+    <div class="col-lg-4 mb-5 mb-lg-0">
+      <h5 class="mb-4 text-info">Schedule</h5>
+      <div class="nav nav-pills flex-column" id="dateTab" role="tablist">
+        <button *ngFor="let date of dates; let i = index" 
+                class="nav-link px-4 text-start mb-3" 
+                [class.active]="date === selectedDate"
+                (click)="changeDate(date)">
+          <span class="d-block fs-5 fw-bold">Day {{ i + 1 }}</span>
+          <span class="small">{{ getFormattedDate(date) }}</span>
+        </button>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="mt-4" *ngIf="totalItems > itemsPerPage">
+        <nav aria-label="Appointment pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1">&laquo; Previous</button>
+            </li>
+            <li class="page-item disabled">
+              <span class="page-link">Page {{ currentPage }} of {{ totalPages }}</span>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages">Next &raquo;</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- Appointment List -->
+    <div class="col-lg-8">
+      <div class="tab-content" id="appointmentContent">
+        <div class="tab-pane fade show active">
+          <ul class="pt-4 list-unstyled mb-0">
+            <li *ngFor="let appointment of paginatedAppointments" 
+                class="d-flex flex-column flex-md-row py-4 appointment-item"
+                [class.bg-light]="selectedAppointment?.id === appointment.id"
+                (click)="viewAppointmentDetails(appointment)">
+              <span class="flex-shrink-0 width-13x me-md-4 d-block mb-3 mb-md-0 small text-muted">
+                {{ getFormattedTime(appointment.startTime) }} - {{ getFormattedTime(appointment.endTime) }}
+              </span>
+              <div class="flex-grow-1 ps-4 border-start border-3" 
+                   [ngClass]="{'border-success': appointment.status === 'SCHEDULED', 
+                              'border-primary': appointment.status === 'COMPLETED', 
+                              'border-danger': appointment.status === 'CANCELLED'}">
+                <h4>
+                  {{ isDoctor ? appointment.patientName : appointment.doctorName }}
+                  <span class="badge" 
+                        [ngClass]="{'bg-success': appointment.status === 'SCHEDULED', 
+                                  'bg-primary': appointment.status === 'COMPLETED', 
+                                  'bg-danger': appointment.status === 'CANCELLED'}">
+                    {{ appointment.status }}
+                  </span>
+                </h4>
+                <p class="mb-0" *ngIf="!isDoctor">
+                  <strong>Specialty:</strong> {{ appointment.doctorSpecialty }}
+                </p>
+                <p class="mb-0" *ngIf="isDoctor">
+                  <strong>Phone:</strong> {{ appointment.patientPhone }}
+                </p>
+                <p class="mb-0">
+                  <small class="text-muted">Click for details</small>
+                </p>
+              </div>
+            </li>
+
+            <!-- Empty state -->
+            <li *ngIf="paginatedAppointments.length === 0" class="text-center py-5">
+              <div class="alert alert-info">
+                <i class="icofont-calendar me-2"></i>
+                No appointments scheduled for this date.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Details Modal -->
+  <div class="modal" [class.show]="selectedAppointment" [style.display]="selectedAppointment ? 'block' : 'none'">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" *ngIf="selectedAppointment">
+        <div class="modal-header">
+          <h5 class="modal-title">Appointment Details</h5>
+          <button type="button" class="btn-close" (click)="closeDetails()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Date & Time:</h6>
+                <span>{{ getFormattedDate(selectedAppointment.date) }}, 
+                  {{ getFormattedTime(selectedAppointment.startTime) }} - 
+                  {{ getFormattedTime(selectedAppointment.endTime) }}</span>
+              </div>
+            </div>
+
+            <!-- Doctor view (patient details) -->
+            <div class="col-12 mb-3" *ngIf="isDoctor">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Patient:</h6>
+                <span>{{ selectedAppointment.patientName }}</span>
+              </div>
+            </div>
+            <div class="col-12 mb-3" *ngIf="isDoctor">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Contact:</h6>
+                <span>{{ selectedAppointment.patientPhone }}</span>
+              </div>
+            </div>
+
+            <!-- Patient view (doctor details) -->
+            <div class="col-12 mb-3" *ngIf="!isDoctor">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Doctor:</h6>
+                <span>{{ selectedAppointment.doctorName }}</span>
+              </div>
+            </div>
+            <div class="col-12 mb-3" *ngIf="!isDoctor">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Specialty:</h6>
+                <span>{{ selectedAppointment.doctorSpecialty }}</span>
+              </div>
+            </div>
+
+            <!-- Common fields -->
+            <div class="col-12 mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Status:</h6>
+                <span class="badge" 
+                      [ngClass]="{'bg-success': selectedAppointment.status === 'SCHEDULED', 
+                                'bg-primary': selectedAppointment.status === 'COMPLETED', 
+                                'bg-danger': selectedAppointment.status === 'CANCELLED'}">
+                  {{ selectedAppointment.status }}
+                </span>
+              </div>
+            </div>
+            <div class="col-12">
+              <h6>Notes:</h6>
+              <p class="border p-2 rounded">{{ selectedAppointment.notes }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeDetails()">Close</button>
+          <button type="button" class="btn btn-primary" *ngIf="selectedAppointment.status === 'SCHEDULED'">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show" *ngIf="selectedAppointment"></div>
+</div>

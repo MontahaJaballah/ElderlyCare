@@ -1,0 +1,58 @@
+<div class="auth-test-container">
+  <h2>Authentication Integration Test</h2>
+  
+  <div class="status-card">
+    <h3>Authentication Status</h3>
+    <p><strong>Status:</strong> <span [class]="authStatus === 'Logged in' ? 'success' : 'warning'">{{ authStatus }}</span></p>
+    
+    <div *ngIf="userInfo" class="user-info">
+      <p><strong>User Type:</strong> {{ userInfo.userType }}</p>
+      <p><strong>Token:</strong> <code>{{ userInfo.token }}</code></p>
+    </div>
+    
+    <div *ngIf="!userInfo" class="login-prompt">
+      <p>Please <a routerLink="/login">log in</a> to test authentication integration.</p>
+    </div>
+  </div>
+  
+  <div class="test-buttons" *ngIf="userInfo">
+    <button (click)="testNodeAuth()" [disabled]="loading" class="btn btn-primary">
+      Test Node.js Auth Server
+    </button>
+    <button (click)="testSpringBoot()" [disabled]="loading" class="btn btn-success">
+      Test Spring Boot RendezVous Service
+    </button>
+    <button (click)="logout()" class="btn btn-danger">
+      Logout
+    </button>
+  </div>
+  
+  <div *ngIf="loading" class="loading">
+    <p>Loading...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  
+  <div class="results-container">
+    <div *ngIf="nodeAuthResponse" class="result-card">
+      <h3>Node.js Auth Server Response</h3>
+      <pre>{{ nodeAuthResponse | json }}</pre>
+    </div>
+    
+    <div *ngIf="springBootResponse" class="result-card">
+      <h3>Spring Boot RendezVous Service Response</h3>
+      <pre>{{ springBootResponse | json }}</pre>
+    </div>
+  </div>
+  
+  <div class="integration-info">
+    <h3>Integration Information</h3>
+    <ul>
+      <li><strong>Node.js Auth Server:</strong> http://localhost:5000</li>
+      <li><strong>Spring Boot RendezVous Service:</strong> http://localhost:8088</li>
+      <li><strong>JWT Token Flow:</strong> Node.js Auth Server → Angular Frontend → Spring Boot RendezVous Service</li>
+    </ul>
+  </div>
+</div>

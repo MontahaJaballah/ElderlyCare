@@ -12,6 +12,21 @@
             </div>
 
             <div class="form-group mb-3">
+              <label for="userType">User Type</label>
+              <select 
+                formControlName="userType"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f['userType'].errors }"
+              >
+                <option [value]="userTypes.PROFESSIONNEL_SANTE">Health Professional</option>
+                <option [value]="userTypes.PERSONNE_AGEE">Elderly Person</option>
+              </select>
+              <div *ngIf="submitted && f['userType'].errors" class="invalid-feedback">
+                <div *ngIf="f['userType'].errors['required']">User type is required</div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
               <label for="email">Email</label>
               <input
                 type="email"

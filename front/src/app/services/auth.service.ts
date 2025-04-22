@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { User, AuthResponse } from '../models/user.model';
+import { User, AuthResponse, UserType, RegisterProfessionnelRequest, RegisterPersonneAgeeRequest, LoginRequest } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/users';
+  private apiUrl = 'http://localhost:5000';
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  
+
   constructor(private http: HttpClient) {
     this.loadUserFromLocalStorage();
   }
@@ -31,45 +31,103 @@ export class AuthService {
 
   // Get current user value
   public get currentUserValue(): User | null {
-    return this.currentUserSubject.value;
+    const user = this.currentUserSubject.value;
+    if (user) {
+      return {
+        ...user,
+        userType: user.userType as UserType
+      };
+    }
+    return null;
   }
 
-  // Register a new user
-  signup(user: { name: string; email: string; password: string; age?: number }): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, user).pipe(
+  // Register a professional healthcare provider
+  registerProfessionnel(request: RegisterProfessionnelRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/professionnel`, request).pipe(
       tap(response => {
-        if (response && response.user) {
-          localStorage.setItem('currentUser', JSON.stringify(response.user));
-          this.currentUserSubject.next(response.user);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userType', response.type.toString());
+          localStorage.setItem('currentUser', JSON.stringify({
+            ...response.user,
+            userType: response.type
+          }));
+          this.currentUserSubject.next({
+            ...response.user,
+            userType: response.type
+          });
+        }
+      })
+    );
+  }
+
+  // Register an elderly person
+  registerPersonneAgee(request: RegisterPersonneAgeeRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/register/personneagee`, request).pipe(
+      tap(response => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userType', response.type.toString());
+          localStorage.setItem('currentUser', JSON.stringify({
+            ...response.user,
+            userType: response.type
+          }));
+          this.currentUserSubject.next({
+            ...response.user,
+            userType: response.type
+          });
         }
       })
     );
   }
 
   // Login user
-  login(credentials: { email: string; password: string }): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
+  login(credentials: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, credentials).pipe(
       tap(response => {
-        if (response && response.user) {
-          localStorage.setItem('currentUser', JSON.stringify(response.user));
-          this.currentUserSubject.next(response.user);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userType', response.type.toString());
+          localStorage.setItem('currentUser', JSON.stringify({
+            ...response.user,
+            userType: response.type
+          }));
+          this.currentUserSubject.next({
+            ...response.user,
+            userType: response.type
+          });
         }
       })
     );
   }
 
   // Logout user
-  logout(): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/logout`, {}).pipe(
-      tap(() => {
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
-      })
-    );
+  logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userType');
+    this.currentUserSubject.next(null);
   }
 
   // Check if user is logged in
   isLoggedIn(): boolean {
-    return !!this.currentUserValue;
+    return !!localStorage.getItem('token');
+  }
+
+  // Check if current user is a professional
+  public isProfessional(): boolean {
+    const user = this.currentUserValue;
+    return user?.userType === UserType.PROFESSIONNEL_SANTE;
+  }
+
+  // Check if current user is an elderly person
+  public isElderly(): boolean {
+    const user = this.currentUserValue;
+    return user?.userType === UserType.PERSONNE_AGEE;
+  }
+
+  // Get appointments (placeholder for now)
+  getAppointments(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/api/appointments`);
   }
 }

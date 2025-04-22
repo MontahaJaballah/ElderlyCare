@@ -1,11 +1,14 @@
 import { Component, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 declare var $: any; // Declare jQuery to avoid TypeScript errors
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  imports: [CommonModule],
+  standalone: true
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   

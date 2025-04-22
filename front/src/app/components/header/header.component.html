@@ -73,6 +73,30 @@
 						</ul>
 					</li>-->
 					<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+					<!-- User Account Dropdown -->
+					<li class="nav-item dropdown" *ngIf="isLoggedIn">
+						<a class="nav-link dropdown-toggle user-dropdown" href="#" id="userDropdown" 
+							(click)="toggleDropdown(); $event.preventDefault()" aria-haspopup="true" [attr.aria-expanded]="dropdownOpen">
+							<i class="icofont-user-alt-3 mr-1"></i>
+							<span>{{ userName || 'User' }}</span>
+						</a>
+						<ul class="dropdown-menu" [class.show]="dropdownOpen" aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" routerLink="/profile">My Profile</a></li>
+							<li *ngIf="userType === 'PROFESSIONNEL_SANTE'"><a class="dropdown-item" routerLink="/disponibilites">My Availability</a></li>
+							<li *ngIf="userType === 'PERSONNE_AGEE'"><a class="dropdown-item" routerLink="/mes-rendez-vous">My Appointments</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="#" (click)="logout(); $event.preventDefault()">Sign Out</a></li>
+						</ul>
+					</li>
+
+					<!-- Login/Register Links -->
+					<li class="nav-item" *ngIf="!isLoggedIn">
+						<a class="nav-link" routerLink="/login">Login</a>
+					</li>
+					<li class="nav-item" *ngIf="!isLoggedIn">
+						<a class="nav-link" routerLink="/signup">Register</a>
+					</li>
 				</ul>
 			</div>
 		</div>

@@ -1,95 +1,218 @@
-const User = require('./userModel');
+const { ProfessionnelSante, PersonneAgee } = require('./userModel');
+const jwt = require('jsonwebtoken');
 
-// GET all users
-const getUsers = async (req, res) => {
+// Secret key for JWT
+const JWT_SECRET = process.env.JWT_SECRET || 'elderly-care-secret-key';
+
+// Helper function to generate JWT token
+const generateToken = (user, userType) => {
+  return jwt.sign(
+    { 
+      id: user._id, 
+      email: user.email,
+      userType: userType 
+    },
+    JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+};
+
+// Helper function to sanitize user object (remove password)
+const sanitizeUser = (user) => {
+  const userObj = user.toObject();
+  delete userObj.password;
+  return userObj;
+};
+
+// GET all professionals
+const getProfessionnels = async (req, res) => {
   try {
-    const users = await User.find().select('-password');
-    res.json(users);
+    const professionnels = await ProfessionnelSante.find().select('-password');
+    res.json(professionnels);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
-// GET single user by ID
-const getUserById = async (req, res) => {
+// GET all elderly persons
+const getPersonnesAgees = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-password');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    const personnesAgees = await PersonneAgee.find().select('-password');
+    res.json(personnesAgees);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// GET professional by ID
+const getProfessionnelById = async (req, res) => {
+  try {
+    const professionnel = await ProfessionnelSante.findById(req.params.id).select('-password');
+    if (!professionnel) {
+      return res.status(404).json({ error: 'Professional not found' });
     }
-    res.json(user);
+    res.json(professionnel);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
-// POST create new user
-const createUser = async (req, res) => {
+// GET elderly person by ID
+const getPersonneAgeeById = async (req, res) => {
   try {
-    const { name, email, age } = req.body;
-    const newUser = new User({ name, email, age });
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const personneAgee = await PersonneAgee.findById(req.params.id).select('-password');
+    if (!personneAgee) {
+      return res.status(404).json({ error: 'Elderly person not found' });
+    }
+    res.json(personneAgee);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: 'Server error' });
   }
 };
 
-// PUT update user
-const updateUser = async (req, res) => {
+// UPDATE professional
+const updateProfessionnel = async (req, res) => {
   try {
-    const { name, email, age } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
+    const { prenom, nom, specialite, telephone, email } = req.body;
+    const updatedProfessionnel = await ProfessionnelSante.findByIdAndUpdate(
       req.params.id,
-      { name, email, age },
+      { prenom, nom, specialite, telephone, email },
       { new: true }
     ).select('-password');
     
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!updatedProfessionnel) {
+      return res.status(404).json({ error: 'Professional not found' });
     }
     
-    res.json(updatedUser);
+    res.json(updatedProfessionnel);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-// DELETE user
-const deleteUser = async (req, res) => {
+// UPDATE elderly person
+const updatePersonneAgee = async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    const { prenom, nom, dateNaissance, adresse, telephone, email } = req.body;
+    const updatedPersonneAgee = await PersonneAgee.findByIdAndUpdate(
+      req.params.id,
+      { prenom, nom, dateNaissance, adresse, telephone, email },
+      { new: true }
+    ).select('-password');
     
-    if (!deletedUser) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!updatedPersonneAgee) {
+      return res.status(404).json({ error: 'Elderly person not found' });
     }
     
-    res.json({ message: 'User deleted successfully' });
+    res.json(updatedPersonneAgee);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// DELETE professional
+const deleteProfessionnel = async (req, res) => {
+  try {
+    const deletedProfessionnel = await ProfessionnelSante.findByIdAndDelete(req.params.id);
+    
+    if (!deletedProfessionnel) {
+      return res.status(404).json({ error: 'Professional not found' });
+    }
+    
+    res.json({ message: 'Professional deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
-// SIGNUP - Register a new user
-const signup = async (req, res) => {
+// DELETE elderly person
+const deletePersonneAgee = async (req, res) => {
   try {
-    const { name, email, password, age } = req.body;
+    const deletedPersonneAgee = await PersonneAgee.findByIdAndDelete(req.params.id);
+    
+    if (!deletedPersonneAgee) {
+      return res.status(404).json({ error: 'Elderly person not found' });
+    }
+    
+    res.json({ message: 'Elderly person deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// REGISTER a new professional
+const registerProfessionnel = async (req, res) => {
+  try {
+    const { prenom, nom, specialite, telephone, email, password } = req.body;
     
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await ProfessionnelSante.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'User with this email already exists' });
     }
     
-    // Create new user
-    const newUser = new User({ name, email, password, age });
-    const savedUser = await newUser.save();
+    // Create new professional
+    const newProfessionnel = new ProfessionnelSante({ 
+      prenom, 
+      nom, 
+      specialite, 
+      telephone, 
+      email, 
+      password,
+      userType: 'PROFESSIONNEL_SANTE',
+      disponibilites: []
+    });
     
-    // Return user without password
-    const userResponse = savedUser.toObject();
-    delete userResponse.password;
+    const savedProfessionnel = await newProfessionnel.save();
     
-    res.status(201).json(userResponse);
+    // Generate JWT token
+    const token = generateToken(savedProfessionnel, 'PROFESSIONNEL_SANTE');
+    
+    res.status(201).json({
+      message: 'Professional registered successfully',
+      token,
+      type: 'PROFESSIONNEL_SANTE',
+      user: sanitizeUser(savedProfessionnel)
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// REGISTER a new elderly person
+const registerPersonneAgee = async (req, res) => {
+  try {
+    const { prenom, nom, dateNaissance, adresse, telephone, email, password } = req.body;
+    
+    // Check if user already exists
+    const existingUser = await PersonneAgee.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+    
+    // Create new elderly person
+    const newPersonneAgee = new PersonneAgee({ 
+      prenom, 
+      nom, 
+      dateNaissance, 
+      adresse, 
+      telephone, 
+      email, 
+      password,
+      userType: 'PERSONNE_AGEE'
+    });
+    
+    const savedPersonneAgee = await newPersonneAgee.save();
+    
+    // Generate JWT token
+    const token = generateToken(savedPersonneAgee, 'PERSONNE_AGEE');
+    
+    res.status(201).json({
+      message: 'Elderly person registered successfully',
+      token,
+      type: 'PERSONNE_AGEE',
+      user: sanitizeUser(savedPersonneAgee)
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -98,24 +221,41 @@ const signup = async (req, res) => {
 // LOGIN - Authenticate a user
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, type } = req.body;
     
-    // Find user by email
-    const user = await User.findOne({ email });
+    let user;
+    let userType;
+    
+    // Find user by email and type
+    if (type === 'PROFESSIONNEL_SANTE') {
+      user = await ProfessionnelSante.findOne({ email });
+      userType = 'PROFESSIONNEL_SANTE';
+    } else if (type === 'PERSONNE_AGEE') {
+      user = await PersonneAgee.findOne({ email });
+      userType = 'PERSONNE_AGEE';
+    } else {
+      return res.status(400).json({ error: 'Invalid user type' });
+    }
+    
     if (!user) {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
     
     // Check password
-    if (user.password !== password) {
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
     
-    // Return user without password
-    const userResponse = user.toObject();
-    delete userResponse.password;
+    // Generate JWT token
+    const token = generateToken(user, userType);
     
-    res.json({ message: 'Login successful', user: userResponse });
+    res.json({
+      message: 'Login successful',
+      token,
+      type: userType,
+      user: sanitizeUser(user)
+    });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -124,19 +264,66 @@ const login = async (req, res) => {
 // LOGOUT - End user session
 const logout = async (req, res) => {
   try {
+    // JWT is stateless, so we just return success
+    // Client-side should remove the token
     res.json({ message: 'Logged out successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
+// Add availability slot for professional
+const addAvailability = async (req, res) => {
+  try {
+    const { date, heureDebut, heureFin } = req.body;
+    const professionnelId = req.params.id;
+    
+    const professionnel = await ProfessionnelSante.findById(professionnelId);
+    if (!professionnel) {
+      return res.status(404).json({ error: 'Professional not found' });
+    }
+    
+    professionnel.disponibilites.push({ date, heureDebut, heureFin });
+    await professionnel.save();
+    
+    res.status(201).json({
+      message: 'Availability added successfully',
+      disponibilites: professionnel.disponibilites
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Get professional's availability
+const getAvailability = async (req, res) => {
+  try {
+    const professionnelId = req.params.id;
+    
+    const professionnel = await ProfessionnelSante.findById(professionnelId);
+    if (!professionnel) {
+      return res.status(404).json({ error: 'Professional not found' });
+    }
+    
+    res.json(professionnel.disponibilites);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 module.exports = { 
-  getUsers, 
-  getUserById, 
-  createUser, 
-  updateUser, 
-  deleteUser,
-  signup,
+  getProfessionnels,
+  getPersonnesAgees,
+  getProfessionnelById,
+  getPersonneAgeeById,
+  updateProfessionnel,
+  updatePersonneAgee,
+  deleteProfessionnel,
+  deletePersonneAgee,
+  registerProfessionnel,
+  registerPersonneAgee,
   login,
-  logout
+  logout,
+  addAvailability,
+  getAvailability
 };

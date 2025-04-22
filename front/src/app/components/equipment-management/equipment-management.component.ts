@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { EquipmentService } from '../../services/equipment.service';
 import { Equipment } from '../../models/equipment.model';
 
 @Component({
   selector: 'app-equipment-management',
   templateUrl: './equipment-management.component.html',
-  styleUrls: ['./equipment-management.component.css']
+  styleUrls: ['./equipment-management.component.css'],
+  imports: [CommonModule, FormsModule, DatePipe],
+  standalone: true
 })
 export class EquipmentManagementComponent implements OnInit {
   equipment: Equipment[] = [];
